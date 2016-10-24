@@ -456,7 +456,11 @@ sub ReadVPN {
 	    close F;
 
 	    if ($file =~ /\.conf$/) { $$datas{'VPN_STATUS'} = 1; } else { $$datas{'VPN_STATUS'} = 0; }
-	    if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+
+        system('systemctl status openvpn@'.$namefile);
+        if($? == 0) { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+
+	    
 
 	    if ($only_managed == 1 and !exists($$datas{'management'})) { next; }
 	    if (exists($$datas{'secret'})) { $vpns_static{$$datas{'VPN_NAME'}} = $datas; } 
