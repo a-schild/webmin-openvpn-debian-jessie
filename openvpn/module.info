@@ -1,0 +1,8 @@
+name=OpenVPN
+category=servers
+os_support=*-linux freebsd openbsd netbsd
+desc=OpenVPN + CA
+desc_it=OpenVPN + CA
+depends=1.250
+version=1.250
+readonly=1

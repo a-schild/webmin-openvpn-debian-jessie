@@ -1,0 +1,153 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------
+# Description: bridge-end script to terminate a network bridge with the help of bridge-uils
+#		reset the eth-device to the $ip $netmask given
+#		tries to set the default gateway (if given) and nameserver
+# Author: H. Spaethe
+# Created at: Aug 2006
+# System: Linux 2.6.15-26-686 on i686
+#    
+#----------------------------------------------------------------------
+# maybe usfull functions
+#----------------------------------------------------------------------
+echo_usage(){
+    echo ""
+    echo usage bridge_end --killbridge br=\"Bridge Device\"
+    echo other possible values 
+    echo -e "\t \t	eth=\"Network Device to release\""
+    echo -e "\t \t	tap=\"TAP Device to release\" "
+    echo ""
+    echo values need to do \'ifconfig\' for eth 
+    echo -e "\t \t	--seteth"
+    echo -e "\t \t	ip=\"IP for eth\""
+    echo -e "\t \t	netmask=\"NETMASK for eth\""
+    echo ""
+    echo if given, default gateway and nameserver are set 
+    echo -e "\t \t	gw=\"Gateway of eth\""
+    echo -e "\t \t	namesrv=\"nameserver\""
+    echo ""
+    echo "e.g.  bridge_end --seteth br=br0 eth=eth0 ip=192.168.0.1 netmask=255.255.255.0"
+    echo releases \"eth0\" from bridge \"br0\" and sets up \"eth0\" with \"ip\" and \"netmask\"
+    echo ""
+    echo "e.g.  bridge_end --killbridge --seteth br=br0 eth=eth0 ip=192.168.0.1 netmask=255.255.255.0"
+    echo "delete the bridge \"br0\" and sets up \"eth0\" with \"ip\" and \"netmask\""
+    echo ""
+    echo " --help | -h | /? prints this help"
+    echo ""
+    exit 1
+}
+
+#----------------------------------------------------------------------
+killbr=false
+seteth=false
+isbr=false
+iseth=false
+istap=false
+isip=false
+isnetmask=false
+isgw=false
+isnamesrv=false
+
+for ARG in $*; do
+    case $ARG in
+	--killbridge)
+	    killbr=true
+	;;
+	--seteth)
+	    seteth=true
+	;;
+	
+	br*)
+	    br=`echo $ARG|sed 's/^br=//'`
+	    isbr=true
+	;;
+	eth*) 
+	    eth=`echo $ARG|sed 's/^eth=//'`
+	    iseth=true
+	;;
+	tap*) 
+	    tap=`echo $ARG|sed 's/^tap=//'`
+	    istap=true
+	;;
+	ip*) 
+	    ip=`echo $ARG|sed 's/^ip=//'`
+	    isip=true
+	;;
+	netmask*) 
+	    netmask=`echo $ARG|sed 's/^netmask=//'`
+	    isnetmask=true
+	;;
+	gw*) 
+	    gw=`echo $ARG|sed 's/^gw=//'`
+	    isgw=true
+	;;
+	namesrv*) 
+	    namesrv=`echo $ARG|sed 's/^namesrv=//'`
+	    isnamesrv=true
+	;;
+	--help|-h|/?)
+	    echo_usage
+	;;
+	*)
+	echo_usage
+	;;
+    esac
+done
+
+
+if $killbr && $isbr; then
+    
+    `ifconfig $br down`
+    if [ $? -ne 0 ]; then 
+	exit 1
+    fi
+    
+    `brctl delbr $br`
+    if [ $? -ne 0 ]; then
+	exit 1
+    fi
+
+elif $iseth && $isbr; then
+    brctl delif $br $eth
+    if [ $? -ne 0 ] ; then
+	exit 1
+    else
+	ifconfig $eth -promisc down
+    fi
+
+elif $istap && $isbr; then
+    brctl delif $br $tap
+    if [ $? -ne 0 ]; then
+	exit 1
+    fi
+
+else
+    echo_usage
+fi
+
+if $seteth && $isip && $isnetmask; then
+    if $isgw && $isnamesrv; then
+        ifconfig $eth $ip netmask $netmask up
+        route add -net 0.0.0.0 gw $gw $eth
+	if [ `cat /etc/resolv.conf|grep -c $namesrv` -eq 0  ]; then
+    	    echo $namesrv >> /etc/resolv.conf
+	else
+	    echo Nameserver exists!
+	fi
+        exit 0
+
+    elif $isgw; then
+        ifconfig $eth $ip netmask $netmask up
+        route add -net 0.0.0.0 gw $gw $eth
+        exit 0
+
+    else
+        ifconfig $eth $ip netmask $netmask up
+        exit 0
+    fi
+else
+    echo_usage
+fi
+
+exit 0

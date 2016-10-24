@@ -1,0 +1,302 @@
+2007-06-05 10:53  marco
+
+	* ChangeLog, HISTORY.EN, HISTORY.IT, VERSION: sistemata
+	  documentazione per versione 2.5
+
+2007-06-05 10:33  marco
+
+	* ChangeLog, HISTORY.EN, HISTORY.IT, VERSION, actions.cgi,
+	  config-*-linux, config-netbsd, config-openbsd, config.info,
+	  config.info.it, create_ca.cgi, create_client.cgi, create_key.cgi,
+	  create_static_vpn.cgi, create_vpn.cgi, index.cgi,
+	  modify_client.cgi, modify_static_vpn.cgi, modify_vpn.cgi,
+	  module.info, new_client.cgi, new_static_vpn.cgi, new_vpn.cgi,
+	  openvpn-lib.pl, br_scripts/bridge_start, lang/de, lang/en,
+	  lang/it, lang/us: Modifiche per nuova versione 2.5
+
+2007-03-23 12:41  marco
+
+	* ChangeLog, create_client.cgi, new_client.cgi: Sistemato baco su
+	  tcp-client in clients.
+
+2006-12-01 18:02  marco
+
+	* ChangeLog, HISTORY.EN, HISTORY.IT: sistemata documentazione per
+	  versione 2.0
+
+2006-12-01 17:48  marco
+
+	* CONTRIBUTORS, ChangeLog, HISTORY.EN, HISTORY.IT, create_vpn.cgi,
+	  lang/de, lang/en, lang/it, ovpn_plugin/openvpn-down-root.so:
+	  Rimozione file .so dipendente da versione di openvpn e
+	  sistemazione errori con traduzione in nuova patch
+
+2006-12-01 11:47  marco
+
+	* ChangeLog, HISTORY.IT, clientlist_vpn.cgi,
+	  remove_client_connected.cgi, lang/de, lang/en, lang/it: Per
+	  disconnettere un utente da connessioni attive rimuovo solamente
+	  il file ccd corrispondente invece che cancellare il client
+	  stesso.
+
+2006-12-01 11:31  marco
+
+	* CONTRIBUTORS, HISTORY.EN, HISTORY.IT, VERSION,
+	  clientlist_vpn.cgi, lang/de, lang/en, lang/it: Aggiunto link a
+	  clients di openvpn in schermata clientlist_vpn.cgi
+
+2006-12-01 10:43  marco
+
+	* ChangeLog, config, config-*-linux, config-freebsd, config.info,
+	  config.info.it, create_client.cgi, create_vpn.cgi,
+	  modify_vpn.cgi, new_client.cgi, new_vpn.cgi, openvpn-lib.pl,
+	  br_scripts/bridge_end, br_scripts/bridge_start, lang/de, lang/en,
+	  lang/it, ovpn_plugin/openvpn-down-root.so: Importazione patch per
+	  uso di bridge device fornita da H. Spaethe
+
+2006-06-26 15:31  marco
+
+	* create_client.cgi: Eliminata riga di chiamata a files .bat dalla
+	  configurazione del client.ovpn
+
+2006-06-26 14:54  marco
+
+	* create_client.cgi: Modificato comando in client.ovpn di
+	  up,down,... per eseguire i files .bat
+
+2006-04-19 08:39  marco
+
+	* config-freebsd: aggiunto file di configurazione per freebsd
+	  fornito da Gustavo Fukao
+
+2006-03-30 11:18  marco
+
+	* create_client.cgi: Rimosso controllo su nome client in creazione
+	  del client inutile perche' coincide con il nome della chiave
+
+2006-03-21 11:17  marco
+
+	* ChangeLog, HISTORY.EN, HISTORY.IT, VERSION: Sistemazione
+	  documentazione per nuova versione 1.04
+
+2006-03-21 10:30  marco
+
+	* create_key.cgi, openvpn-lib.pl, lang/de, lang/en, lang/it:
+	  Aggiunta possibilita di creazione chiave per client senza
+	  password
+
+2006-03-15 08:47  marco
+
+	* create_static_vpn.cgi, create_vpn.cgi, modify_static_vpn.cgi,
+	  modify_vpn.cgi, new_static_vpn.cgi, new_vpn.cgi: Modificato i
+	  valori di proto con protocollo tcp in tcp-server ed aggiunto
+	  tcp-client
+
+2006-03-13 10:35  marco
+
+	* ChangeLog, export_client.cgi: Aggiunta creazione file up e down
+	  .bat per windows (caratteri dos) all'esportazione del client.
+
+2006-03-09 14:33  marco
+
+	* ChangeLog, HISTORY.EN, HISTORY.IT, VERSION: Sistemazione
+	  documentazione per nuova versione 1.03
+
+2006-03-09 09:48  marco
+
+	* lang/: de, en: Aggiunta traduzione in tedesco, modificata
+	  traduzione in inglese
+
+2006-02-24 11:37  marco
+
+	* ChangeLog, VERSION: Sistemazione documentazione per nuova
+	  versione 1.02
+
+2006-02-18 10:06  marco
+
+	* actions_ta_key.cgi, create_vpn.cgi, export_client.cgi,
+	  keyslist_ca.cgi, modify_vpn.cgi, openvpn-lib.pl: Modificata la
+	  gestione della ta.key: non piu' una ta per ogni CA ma una ta.key
+	  per ogni vpn. Tolta creazione ed elminazione della ta.key dalla
+	  CA ed introduzione della creazione-eliminazione della stessa
+	  nella cartella del server. Modificata esportazione del client per
+	  prendere la ta.key dalla directory del server.
+
+2006-02-17 18:57  marco
+
+	* create_client.cgi, modify_client.cgi, new_client.cgi,
+	  openvpn-lib.pl, lang/en, lang/it: Aggiunta possibilita' di
+	  editare il file ccd nella modifica e creazione del client.
+
+2006-02-17 17:01  marco
+
+	* new_client.cgi, openvpn-lib.pl, remove_client.cgi,
+	  remove_client_connected.cgi: Effettuate modifiche per permettere
+	  di avere lo stesso client su 2 vpn diverse (ccd-exclusive):
+	  rimossa revoca chiave alla cancellazione del client; alla
+	  creazione del client permetto di utilizzare tutte le chiavi
+	  disponibili tranne quelle gia' utilizzate dai client di quel
+	  server.
+
+2006-02-17 15:34  marco
+
+	* ChangeLog, create_client.cgi, create_vpn.cgi, modify_client.cgi,
+	  modify_vpn.cgi, new_client.cgi, new_vpn.cgi, openvpn-lib.pl:
+	  Corretto baco in creazione ta.key che ricreava la ta.key anche se
+	  gia' esistente. Spostato parametro mssfix dopo fragment e tun-mtu
+	  sia in interfaccia che in file di configurazione di server e
+	  client
+
+2006-01-23 14:53  marco
+
+	* CHANGELOG, ChangeLog, HISTORY.EN, VERSION: Aggiunta
+	  documentazione revisioni
+
+2006-01-23 14:39  marco
+
+	* openvpn-lib.pl: Sistemazione lettura informazioni chiavi valide
+	  da file index.txt che non funzionava in assenza di alcuni campi
+
+2006-01-20 13:44  marco
+
+	* create_vpn.cgi: [no log message]
+
+2006-01-20 10:01  marco
+
+	* create_client.cgi, create_static_vpn.cgi, create_vpn.cgi,
+	  index.cgi: Sistemazione permessi dei files e directory con
+	  ccd-exclusive
+
+2006-01-20 09:30  marco
+
+	* create_vpn.cgi: sistemato problema di ccd-exclusive senza chroot:
+	  vuole il percorso completo
+
+2006-01-18 11:55  marco
+
+	* export_client.cgi: Sistemazioni problemi esportazione client
+
+2006-01-18 11:49  marco
+
+	* modify_client.cgi: [no log message]
+
+2006-01-16 11:38  marco
+
+	* openvpn-lib.pl: Sistemazioni di alcuni parametri relativi a
+	  exclude-ccd
+
+2006-01-14 10:07  marco
+
+	* create_static_vpn.cgi: Sistemazioni permessi di file .key in
+	  server statico
+
+2006-01-14 09:58  marco
+
+	* actions_ta_key.cgi, create_static_vpn.cgi, create_vpn.cgi:
+	  Modifica permessi ta.key per lettura da nobody
+
+2006-01-14 09:52  marco
+
+	* config, config-*-linux, index.cgi, openssl.cnf, openvpn-ssl.cnf:
+	  sistemazione path per file .cnf
+
+2006-01-14 09:20  marco
+
+	* create_vpn.cgi, openvpn-lib.pl: Aggiunta parametro
+	  client-config-dir automatico ma legato a ccd-exclusive
+
+2006-01-13 17:54  marco
+
+	* create_client.cgi, create_vpn.cgi, modify_vpn.cgi, new_vpn.cgi,
+	  openvpn-lib.pl, lang/en, lang/it: Aggiunta parametro
+	  ccd-exclusive automaticamente nei servers: il client creato su
+	  questo server potra' accedere solo a questo server anche se altri
+	  servers hanno la stessa CA.
+
+2006-01-13 15:12  marco
+
+	* clientlist_vpn.cgi, create_ca.cgi, create_client.cgi,
+	  create_key.cgi, create_static_vpn.cgi, create_vpn.cgi, index.cgi,
+	  keyslist_ca.cgi, listactiveconnect.cgi, listca.cgi, listvpn.cgi,
+	  log_vpn.cgi, modify_client.cgi, modify_static_vpn.cgi,
+	  modify_vpn.cgi, new_client.cgi, new_static_vpn.cgi, new_vpn.cgi,
+	  remove_ca.cgi, remove_client.cgi, remove_client_connected.cgi,
+	  remove_key.cgi, remove_static_vpn.cgi, remove_vpn.cgi,
+	  verify_ca.cgi, verify_key.cgi, view_ca.cgi, view_key.cgi:
+	  Aggiunto link a pagina principale di modulo openvpn in tutte le
+	  pagine
+
+2006-01-12 10:36  marco
+
+	* create_client.cgi, create_vpn.cgi, export_client.cgi,
+	  modify_client.cgi, modify_vpn.cgi, new_client.cgi, new_vpn.cgi,
+	  openvpn-lib.pl, lang/en, lang/it: soluzione vari problemi con i
+	  clients riguardanti la ta.key ed i parametri del client stesso
+
+2006-01-11 17:43  marco
+
+	* create_client.cgi, export_client.cgi, export_key.cgi:
+	  Sistemazione parametri di esportazione client
+
+2006-01-03 16:36  marco
+
+	* config, config-*-linux, index.cgi, lang/en, lang/it: Sistemate
+	  etichette e configurazione di openssl.cnf
+
+2005-12-27 15:58  marco
+
+	* AUTHORS, CHANGELOG, COPYING, action_vpn.cgi, actions.cgi,
+	  actions_ta_key.cgi, clientlist_vpn.cgi, create_ca.cgi,
+	  create_client.cgi, create_key.cgi, create_static_vpn.cgi,
+	  create_vpn.cgi, export_client.cgi, export_key.cgi, index.cgi,
+	  keyslist_ca.cgi, listactiveconnect.cgi, listca.cgi, listvpn.cgi,
+	  log_vpn.cgi, modify_client.cgi, modify_static_vpn.cgi,
+	  modify_vpn.cgi, new_client.cgi, new_static_vpn.cgi, new_vpn.cgi,
+	  openvpn-lib.pl, remove_ca.cgi, remove_client.cgi,
+	  remove_client_connected.cgi, remove_key.cgi,
+	  remove_static_vpn.cgi, remove_vpn.cgi, verify_ca.cgi,
+	  verify_key.cgi, view_ca.cgi, view_key.cgi: Sistemazione
+	  documentazione
+
+2005-12-23 14:47  marco
+
+	* action_vpn.cgi, actions.cgi, actions_ta_key.cgi,
+	  clientlist_vpn.cgi, config, config-*-linux, config.info,
+	  config.info.it, create_ca.cgi, create_client.cgi, create_key.cgi,
+	  create_static_vpn.cgi, create_vpn.cgi, export_client.cgi,
+	  export_key.cgi, index.cgi, keyslist_ca.cgi,
+	  listactiveconnect.cgi, listca.cgi, listvpn.cgi, log_vpn.cgi,
+	  modify_client.cgi, modify_static_vpn.cgi, modify_vpn.cgi,
+	  module.info, new_client.cgi, new_static_vpn.cgi, new_vpn.cgi,
+	  openssl.cnf, openvpn-lib.pl, remove_ca.cgi, remove_client.cgi,
+	  remove_client_connected.cgi, remove_key.cgi,
+	  remove_static_vpn.cgi, remove_vpn.cgi, verify_ca.cgi,
+	  verify_key.cgi, view_ca.cgi, view_key.cgi, help/ca.it.html,
+	  help/intro.en.html, help/intro.html, help/intro.it.html,
+	  help/monitor.it.html, help/openvpn.it.html, help/static.it.html,
+	  help/structure.it.html, images/icon.gif,
+	  images/listactiveconnect.gif, images/listca.gif,
+	  images/listvpn.gif, images/openvpn.gif, images/openvpn1.gif,
+	  lang/en, lang/it: Initial revision
+
+2005-12-23 14:47  marco
+
+	* action_vpn.cgi, actions.cgi, actions_ta_key.cgi,
+	  clientlist_vpn.cgi, config, config-*-linux, config.info,
+	  config.info.it, create_ca.cgi, create_client.cgi, create_key.cgi,
+	  create_static_vpn.cgi, create_vpn.cgi, export_client.cgi,
+	  export_key.cgi, index.cgi, keyslist_ca.cgi,
+	  listactiveconnect.cgi, listca.cgi, listvpn.cgi, log_vpn.cgi,
+	  modify_client.cgi, modify_static_vpn.cgi, modify_vpn.cgi,
+	  module.info, new_client.cgi, new_static_vpn.cgi, new_vpn.cgi,
+	  openssl.cnf, openvpn-lib.pl, remove_ca.cgi, remove_client.cgi,
+	  remove_client_connected.cgi, remove_key.cgi,
+	  remove_static_vpn.cgi, remove_vpn.cgi, verify_ca.cgi,
+	  verify_key.cgi, view_ca.cgi, view_key.cgi, help/ca.it.html,
+	  help/intro.en.html, help/intro.html, help/intro.it.html,
+	  help/monitor.it.html, help/openvpn.it.html, help/static.it.html,
+	  help/structure.it.html, images/icon.gif,
+	  images/listactiveconnect.gif, images/listca.gif,
+	  images/listvpn.gif, images/openvpn.gif, images/openvpn1.gif,
+	  lang/en, lang/it: initial revision
+

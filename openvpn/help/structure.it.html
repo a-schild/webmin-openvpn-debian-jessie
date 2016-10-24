@@ -1,0 +1,111 @@
+<header>Struttura</header>
+
+<p>
+La struttura delle sottocartelle viene creata in maniera automatica
+dal modulo <tt>OpenVPN Administration di Webmin</tt> per ovviare al
+problema di avere un database aggiuntivo e per avere una 
+configurazione agevole senza necessariamente salvare files
+di configurazione aggiuntivi
+
+<p>
+<b>Directories</b>
+
+<pre>
+
+/etc/openvpn/
+            |server1.conf
+            |server2.conf
+            |clients/
+                     |server1/
+                              |client1/
+                              |client2/
+                     |server2/
+                              |client3/
+                              |client4/
+            |keys/
+                     |CAuno/
+                     |CAdue/
+            |servers/
+                     |server1
+                     |server2
+
+</pre>
+
+
+<ul><li>base</li></ul>
+<p style="padding-left:35">
+In questa cartella vengono salvati tutti i files 
+per l'avvio dei server di <tt>OpenVPN</tt>
+<p style="padding-left:35">
+In caso di Debian troverete dei file con estensione .conf che 
+servono sia per le VPN Peer-to-Peer che per le VPN Client-Server
+<p style="padding-left:35">
+In caso di disabilitazione temporanea di una VPN le estensioni
+saranno trasformate in .disabled
+
+<ul><li>keys</li></ul>
+<p style="padding-left:35">
+In questa cartella vengono create le CA come sottocartelle e nelle stesse
+vengono create le relative Keys comprensive di indici e di tutta la gestione
+di revoche tramite i crl.pem
+<p style="padding-left:35">
+Esempio: se avete una CA di nome pippo troverete una sottocartella di keys
+di nome pippo.
+<p style="padding-left:35">
+Se avete delle CA gia' configurate vi consigliamo di copiarle nella stessa 
+cartella e di generare il file ca.config in questo modo:
+<pre style="padding-left:35">
+$info_ca = {
+CA_NAME=>'nuovissima',
+CA_EXPIRE=>'3650',
+KEY_SIZE=>'1024',
+KEY_CONFIG=>'/etc/ssl/openssl.cnf',
+KEY_DIR=>'/etc/openvpn/keys',
+KEY_COUNTRY=>'US',
+KEY_PROVINCE=>'NY',
+KEY_CITY=>'New York',
+KEY_ORG=>'My Org',
+KEY_EMAIL=>'me@my.org',
+}
+</pre>
+<p style="padding-left:35">
+Attenzione a modificare i vari campi per far coincidere la CA reale con le
+informazioni configurate in questo file.
+<p style="padding-left:35">
+Il nome delle chiavi della CA sono <b>OBBLIGATORIAMENTE</b> ca.${extension}
+<p style="padding-left:35">
+Il nome della chiave secret &eacute; <b>OBBLIGATORIAMENTE</b> ta.key e viene
+utilizzata solo per il canale di controllo TLS.
+<ul><li>servers</li></ul>
+<p style="padding-left:35">
+In questa cartella vengono salvati tutti i files di appoggio 
+per l'avvio dei server di <tt>OpenVPN</tt> e per la precisione in una 
+sottocartella che ha lo stesso nome del ${server}.conf senza l'estensione.
+<p style="padding-left:35">
+Praticamente se avete un server che ha il file di configurazione che si chiama
+pippo.conf avremo nella cartella servers una sottodirectory di nome pippo.
+
+<ul><li>clients</li></ul>
+<p style="padding-left:35">
+In questa cartella vengono salvati tutti i files di appoggio e di startup
+per l'avvio dei clients di <tt>OpenVPN</tt> e per la precisione in una 
+sottocartella che ha lo stesso nome del ${server}.conf al quale
+fa' riferimento il client stesso senza l'estensione,
+all'interno della quale viene generata una sottocartella con il nome del client.
+
+<p style="padding-left:35">
+Praticamente se avete un client che ha il file di configurazione che si chiama
+pluto.conf e fa' riferimento al server pippo avremo nella cartella clients 
+una sottodirectory di nome pippo e all'interno di questa una sottodirectory di nome
+pluto con all'interno tutti i files da distribuire ai clients(tramite interfaccia).
+
+<p style="padding-left:35">
+Per importare eventuali configurazioni gia' esistenti e' sufficiente ricreare la struttura
+e mettere a posto i file di configurazione.
+
+
+<hr>
+Creato da <a target=_blank href=http://www.openit.it>OPENIT S.r.l.</a>
+<p>
+<a href=intro>Indice</a>
+

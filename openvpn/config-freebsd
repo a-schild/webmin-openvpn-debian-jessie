@@ -1,0 +1,15 @@
+openvpn_home=/usr/local/etc/openvpn
+openvpn_clients_subdir=clients
+openvpn_servers_subdir=servers
+openvpn_path=/usr/local/sbin/openvpn
+openvpn_keys_subdir=keys
+openvpn_pid_path=/var/run/openvpn.pid
+openssl_home=/usr/local/etc/openvpn/openvpn-ssl.cnf
+openssl_path=/usr/local/bin/openssl
+start_cmd=/usr/local/etc/rc.d/openvpn start
+stop_cmd=/usr/local/etc/rc.d/openvpn stop
+br_start_cmd=/opt/webmin/openvpn/br_scripts/bridge_start
+br_end_cmd=/opt/webmin/openvpn/br_scripts/bridge_end
+down_root_plugin=/opt/webmin/openvpn/ovpn_plugin/openvpn-down-root.so
+zip_cmd=/usr/local/bin/zip
+log_lines=200

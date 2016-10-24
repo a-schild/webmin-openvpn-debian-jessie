@@ -1,0 +1,110 @@
+**    Version 2.6 (2013-04-04)
+
+    Bugs
+
+	01. Nuovo file openvpn-ssl.cnf.
+
+**    Version 2.5 (2007-06-05)
+
+    Changes
+
+	01. Introdotta assegnazione automatica e interattiva numeri dispositivi (tun0,tun1,etc).
+	02. Aggiunto default server in configurazione modulo per accelerare creazione clients.
+	03. Modificato device su client: preimposta tun o tap in funzione del server.
+	04. Impostate tutte le textarea come wrap=off.
+	05. Modificato controllo nome chiave,server,client (come suggerito da H. Spaethe).
+	06. Aggiunti files di configurazione per netbsd ed openbsd.
+	07. Migliorato skin di form di vpn server static.
+	08. Introdotte modifiche a dispositivo tap (patch di H. Spaethe).
+	09. Aggiunta traduzione us (Richard Geoffrion).
+    
+    Bugs
+
+	01. Risolto baco su local che non veniva letto correttamente in interfaccia di modifica.
+	02. Corretto baco in assegnazione reti di trasporto quando vuote.
+	03. Corretto baco in configurazione che non permetteva di usare freebsd.
+
+**    Version 2.01 (23-03-2007)
+
+    Bugs
+
+	01. Sistemato baco su tcp-client in clients che deve inserire automaticamente a posto
+	    di tcp-server nel caso il server sia proprio tcp-server.
+
+**    Version 2.0 (01-12-2006)
+
+    Changes
+
+	01. Aggiunto file di configurazione per freebsd fornito da Gustavo Fukao
+	02. Aggiunto link a clients di openvpn in schermata clientlist_vpn.cgi
+	03. Per disconnettere un utente da connessioni attive rimuovo solamente
+            il file ccd corrispondente invece che cancellare il client stesso.
+	04. Sistemazione codice per la traduzione degli errori nella nuova patch di H. Spaethe.
+
+    Changes da parte di H. Spaethe
+
+	01. Aggiunti elementi della form necessari per il bridge device ('bridge device name',
+	    'network device to bridge','bridge ip','bridge netmask','bridge ip-pool-start/end')
+	02. Implementazione "automatica" di start/stop del bridge allo start/shutdown del server
+	03. Aggiunti elementi per i path degli script di start/end nella sezione configurazione del modulo
+	04. Aggiunto il path per down-root.so nella sezione configurazione del modulo (questo e' necessario
+	    se si vuole riconfigurare il device ethernet automatico allo stop del bridge)
+
+    Bugs da parte di H. Spaethe
+
+	01. Corretto il controllo di ip/network/netmask check (did not work)
+        02. Modificato il codice di generazione degli script di up/down/up-pre/down-pre (aggiunta bash-shebang)
+
+    Bugs
+
+	01. Rimosso controllo su nome client in creazione del client inutile perche' 
+	    coincide con il nome della chiave
+
+**    Version 1.04 (21-03-2006)
+
+    Changes
+
+	01. Aggiunta creazione file up e down .bat per windows (caratteri dos) 
+	    all'esportazione del client.
+	02. Modificato i valori di proto con protocollo tcp in tcp-server. 
+	    ed aggiunto tcp-client.
+	03. Aggiunta possibilita di creazione chiave per client senza password.
+
+**    Version 1.03 (09-03-2006)
+
+    Changes
+
+	01. Aggiunta traduzione in tedesco e modificata traduzione in inglese
+	    da parte di H. Spaethe (Ivan Dolvich).
+
+**    Version 1.02 (24-02-2006)
+
+    Changes
+
+	01. Effettuate modifiche per permettere di avere lo stesso client su 2 vpn 
+	    diverse (ccd-exclusive): rimossa revoca chiave alla cancellazione del client; 
+	    alla creazione del client permetto di utilizzare tutte le chiavi disponibili 
+	    tranne quelle gia' utilizzate dai client di quel server.
+	02. Aggiunta possibilita' di editare il file ccd nella modifica e creazione del client.
+	03. Tolta creazione ed elminazione della ta.key dalla CA ed introduzione della 
+	    creazione-eliminazione della stessa nella cartella del server. 
+	    Modificata esportazione del client per prendere la ta.key dalla directory del server.
+
+    Bugs fixed
+
+	01. Corretto baco in creazione ta.key che ricreava la ta.key anche se gia' esistente. 
+	02. Spostato parametro mssfix dopo fragment e tun-mtu sia in interfaccia che in file di 
+	    configurazione di server e client
+
+**    Version 1.01 (23-01-2006)
+
+    Bugs fixed
+
+        01. Sistemazione lettura informazioni chiavi valide da file index.txt che non funzionava 
+	    in assenza di alcuni campi.
+
+**    Version 1.00 (18-01-2006)
+
+    Changes 
+
+        01. Versione iniziale

@@ -1,0 +1,109 @@
+**    Version 2.6 (2013-04-04)
+
+    Bugs
+
+        01. New file openvpn-ssl.cnf.
+
+
+**    Version 2.5 (2007-06-05)
+
+    Changes
+
+        01. The device number (tun0, tun1, ...) is automatically added and interactivly modifiable.
+        02. In the module configuration area the default server has been added as a new 
+	    item. This addition will quick up the clients creation.
+        03. Device setting: the module set it to tun o tap, based on the server setting.  
+        04. Added a new textarea attribute: wrap="off"
+        05. Test of validity of key, server, client modified as suggested by H. Spaethe.
+        06. Added new config files for netbsd and openbsd.
+        07. Adapted server static form to the webmin skins.
+        08. New modifications to tap device (patch of H. Spaethe).
+	09. Added us translation (Richard Geoffrion).
+
+    Bugs
+
+        01. Resolved bug on local.
+        02. Resolved loop on assignment of network/netmask when not defined.
+        03. Resoved anti freebsd config bug.
+
+**    Version 2.01 (23-03-2007)
+
+    Bugs
+
+        01. Resolved bug on export of client in case of tcp-server.
+
+
+**    Version 2.0 (01-12-2006)
+
+    Changes
+
+	01. Added the freebsd configuration file (thanks to Gustavo Fukao)
+	02. Added a link to openvpn clients inside clientlist_vpn.cgi
+	03. To disconnect a user with active connection remove the file ccd
+	    instead removing the client.
+	04. The new patch of H. Spaethe fix some code for the error translation
+
+    Changes for H. Spaethe
+
+        01. Added form elements needed for bridge control ('bridge device name',
+            'network device to bridge','bridge ip','bridge netmask','bridge ip-pool-start/end')
+        02. "Automatic" start/stop of bridge on server start/shutdown
+        03. Added path of start/end-script to the module config section
+        04. Added path of down-root.so to the module config section (this is  needed
+            if you want to reconfigure the ethernet device automatic on  bridge stop)
+
+    Bugs fixed for H. Spaethe
+
+        01. Fixed the ip/network/netmask check (did not work)
+        02. Modified up/down/up-pre/down-pre - script generation code (added bash-shebang)
+
+    Bugs
+
+	01. When you create the client the client name control has been removed.
+
+**    Version 1.04 (21-03-2006)
+
+    Changes
+
+        01. Added the creation of the up and down MSWIN file .bat when the client is exported.   
+	02. Modified the values of the proto variable: tcp has been changed into tcp-server,
+	    and the value tcp-client has been added. 
+	03. Now you can create the client key without the password.
+
+**    Version 1.03 (09-03-2006)
+
+    Changes
+
+	01. Added the german and the english translation realized by Ivan Dolvich.
+
+**    Version 1.02 (24-02-2006)
+
+    Changes
+
+	01. Now you can have 2 vpn on the same client (ccd-exclusive):
+	    when you remove the client the key will not be revoked;  	 
+	    when you create a new client it is possible to choose a key from all the available keys 
+	    with the exception of the ones already used by an other client on the same server.
+	02. Now you can edit the cdd file during the creation and the modification of the client.
+	03. The ta.key file is moved from the CA dir to the server dir.
+	    The ta.key is not created when you create the CA but when you manage your server.
+	    The ta.key file now is exported from the server dir even when you export your client.
+
+    Bugs fixed
+
+	01. Bug fixed in ta.key creation: ta.key is created only if it is not present.
+
+	02. The mssfix parameter has been set after fragment and tun-mtu parameters, even in the GUI
+	    and in server and client config file. 
+
+**    Version 1.01 (23-01-2006)
+
+    Bugs fixed
+
+        01. Fixed the key file read when some fields were missed.
+
+**    Version 1.00 (18-01-2006)
+
+    Changes 
+
+        01. Initial revision

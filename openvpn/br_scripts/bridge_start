@@ -1,0 +1,158 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------
+# Description: bridge-start script to create a network bridge with the help of bridge-uils
+#		add the eth-device to the bridge given
+#		add the tap-device to the bridge given
+#		tries to set the default gateway (if given) and nameserver
+# Author: H. Spaethe
+# Created at: Aug 2006
+# System: Linux 2.6.15-26-686 on i686
+# Verion: 1.01
+# Changelog:
+#	1.01	Minor changes to prevend bridge-start failure
+#		if bridge names are simaler (br1 br11)
+#
+#	1.00	Creation of the script because i wanted a easy way
+#		to setup a network-bridge
+#   	
+#----------------------------------------------------------------------
+
+setbr=false
+isbr=false
+brexists=false
+iseth=false
+istap=false
+isip=false
+isnetmask=false
+isgw=false
+isnamesrv=false
+
+for ARG in $*; do
+    case $ARG in
+	--setbr)
+	    setbr=true
+	;;
+	
+	br*)
+	    br=`echo $ARG|sed 's/^br=//'`
+	    brctl show |grep -E "^$br " > /dev/null
+	    if [ $? -eq 0 ]; then
+	    	brexists=true
+	    fi
+	    isbr=true
+	;;
+	eth*) 
+	    eth=`echo $ARG|sed 's/^eth=//'`
+	    iseth=true
+	;;
+	tap*) 
+	    tap=`echo $ARG|sed 's/^tap=//'`
+	    istap=true
+	;;
+	ip*) 
+	    ip=`echo $ARG|sed 's/^ip=//'`
+	    isip=true
+	;;
+	netmask*) 
+	    netmask=`echo $ARG|sed 's/^netmask=//'`
+	    isnetmask=true
+	;;
+	gw*) 
+	    gw=`echo $ARG|sed 's/^gw=//'`
+	    isgw=true
+	;;
+	namesrv*) 
+	    namesrv=`echo $ARG|sed 's/^namesrv=//'`
+	    isnamesrv=true
+	;;
+	--help|-h|/?)
+	    echo_usage
+	;;
+    esac
+done
+
+echo_usage(){
+    echo ""
+    echo usage bridge_start br=\"Bridge Device\" eth=\"Network Device to attach\" tap=\"TAP Device to attach\"
+    echo ""
+    echo values need to do \'ifconfig\' for bridge
+    echo -e "\t \t	--setbr"
+    echo -e "\t \t	ip=\"IP for br\""
+    echo -e "\t \t	netmask=\"NETMASK for br\""
+    echo ""
+    echo if given, default gateway and nameserver are set 
+    echo -e "\t \t	gw=\"Gateway of br\""
+    echo -e "\t \t	namesrv=\"nameserver\""
+    echo ""
+    echo "e.g.  bridge_start --setbr br=br0 eth=eth0 ip=192.168.0.1 netmask=255.255.255.0"
+    echo attach \"eth0\" to bridge \"br0\" and sets up \"br0\" with \"ip\" and \"netmask\"
+    echo ""
+    echo ""
+    echo " --help | -h | /? prints this help"
+    echo ""
+    exit 1
+}
+
+if ! $brexists && $isbr; then
+    echo $brexists und $isbr
+    brctl addbr $br
+    if [ $? -ne 0 ]; then
+	exit 1
+    else
+        brexists=true
+    fi
+fi
+
+
+if $brexists && $isbr && $iseth && $istap; then	
+    brctl addif $br $eth
+    if [ $? -eq 0 ] ; then
+	ifconfig $eth 0.0.0.0 promisc up
+    fi
+
+    brctl addif $br $tap
+    if [ $? -eq 0 ]; then
+    	ifconfig $tap 0.0.0.0 promisc up
+    fi
+
+elif $brexists && $isbr && $iseth; then
+    brctl addif $br $eth
+    if [ $? -eq 0 ] ; then
+	ifconfig $eth 0.0.0.0 promisc up
+    fi
+elif $brexists && $isbr && $istap; then
+    brctl addif $br $tap
+    if [ $? -eq 0 ]; then
+    	ifconfig $tap 0.0.0.0 promisc up
+    fi
+else
+    echo_usage
+fi
+
+if $brexists && $setbr && $isip && $isnetmask; then
+    if $isgw -a $isnamesrv; then
+        ifconfig $br $ip netmask $netmask up
+        route add -net 0.0.0.0 gw $gw $br
+	if [ `cat /etc/resolv.conf|grep -c $namesrv` -eq 0  ]; then
+    	    echo $namesrv >> /etc/resolv.conf
+	else
+	    echo Nameserver exists!
+	fi
+        exit 0
+
+    elif $isgw; then
+        ifconfig $br $ip netmask $netmask up
+        route add -net 0.0.0.0 gw $gw $br
+        exit 0
+
+    else
+        ifconfig $br $ip netmask $netmask up
+        exit 0
+        
+    fi
+else
+    echo_usage
+fi
+
+exit 0
