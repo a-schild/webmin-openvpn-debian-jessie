@@ -453,7 +453,7 @@ if ($error) {
 
     # array derivante da comando 'openvpn --show-ciphers': il valore e' il primo campo ed etichetta tutto
     $a_cypher = [];
-    &open_execute_command(CMD, 'openvpn --show-ciphers', 2);
+    &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
     while ($row=<CMD>) {
 	$row =~ s/\r*\n//g;
 	if ($row =~ /bit default key/i) { 

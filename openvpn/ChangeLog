@@ -1,3 +1,51 @@
+2017-02-23 16:36:57 marco (r12)
+
+	Ultimi test e modifiche per versione 3.0 compatibile con debian8
+
+2015-03-17 16:49:57 marco (r11)
+
+	Sistemati files di supporto per nuova versione 2.8
+
+2015-03-17 16:38:58 marco (r10)
+
+	Nuova versione del file openvpn-ssl.cnf
+
+2015-03-17 16:38:00 marco (r9)
+
+	Rimossa possibilita' di creazione chiavi e ca a 1024 bit.
+
+2015-03-17 16:36:18 marco (r8)
+
+	Modifica lettura di parametro expired di ca in modo che funzioni sia se la data e' indicata con anno in 4 cifre (come suggerito da Florian Lagg | IT-Valentin.at) che se la data e' indicata con anno in 2 cifre (come era da noi).
+
+2014-10-06 17:39:55 marco (r7)
+
+	Correzione definizione di parametro proto in creazione file di configurazione di VPN nel caso di proto TCP (come suggerito da Alexander Predeschly).
+
+2014-10-06 17:17:16 marco (r6)
+
+	Modifica a funzione is_openvpn_running per diverso funzionamento di find_byname da webmin 1.380 in poi (segnalazione di Roberto Resoli).
+
+2014-10-06 17:02:19 marco (r5)
+
+	Implementazione textarea static key ion VPN statica (patch di Olivier Beaudet)
+
+2014-10-06 16:41:22 marco (r4)
+
+	Modifica configurazione down_root_plugin per openvpn 2.3.3 (come suggerito da Percivaldi Daniele).
+
+2014-10-06 16:36:01 marco (r3)
+
+	Patch di Percivaldi Daniele x uso su Ubuntu.
+
+2014-10-06 16:27:06 marco (r2)
+
+	Patch di Pierpaolo Palazzo x uso su CentOS
+
+2014-10-06 16:17:34 marco (r1)
+
+	importing initial version 2.6
+
 2007-06-05 10:53  marco
 
 	* ChangeLog, HISTORY.EN, HISTORY.IT, VERSION: sistemata

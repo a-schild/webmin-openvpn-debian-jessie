@@ -212,6 +212,7 @@ up=up (script eseguito dopo attivazione VPN)
 down=down (script eseguito dopo disattivazione VPN)
 up-pre=up-pre (script eseguito prima di attivazione VPN)
 down-pre=down-pre (script eseguito prima di disattivazione VPN)
+statickey=Chaive Statica
 new_client_title=Nuovo Client della VPN
 new_clientmsg=Creazione di nuovo client VPN per server
 list_client_vpn=Lista client per VPN

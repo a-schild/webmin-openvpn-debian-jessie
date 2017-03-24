@@ -245,9 +245,17 @@ if ($error) {
     print OUT "client\n";
     print WCLI "client\r\n";
 
-    foreach $k (qw/proto dev ca dh cert key remote/) {
-	print OUT $k.' '.$in{$k}."\n";
-	print WCLI $k.' '.$in{$k}."\r\n";
+    if($in{proto} eq "tcp-server" or $in{proto} eq "tcp-client") {
+       print OUT "proto tcp\n";
+       print WCLI "proto tcp\r\n";
+    } else {
+       print OUT "proto".' '.$in{proto}."\n";
+       print WCLI "proto".' '.$in{proto}."\r\n";
+    }
+
+    foreach $k (qw/dev ca dh cert key remote/) {
+        print OUT $k.' '.$in{$k}."\n";
+        print WCLI $k.' '.$in{$k}."\r\n";
     }
 
     foreach $k (qw/tls-auth cipher user group verb mute/) {
@@ -276,6 +284,7 @@ if ($error) {
 	    print WCLI $k."\r\n"; 
 	}
     }
+
 
     print OUT "resolv-retry infinite\n";
     print WCLI "resolv-retry infinite\r\n";

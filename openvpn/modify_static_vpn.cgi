@@ -175,6 +175,11 @@ print "<tr>";
     print "<td valign=top nowrap><b>".&ui_textarea('vpn_down', $in{'vpn_down'}, 5, 35, 'off')."</b></td>\n";
     print "<td valign=top nowrap><b>".&ui_textarea('client_down', $in{'client_down'}, 5, 35, 'off')."</b></td>\n";
 print "</tr>\n";
+print "<tr>";
+    print "<td valign=top><b>" . $text{'statickey'} . "</b></td>\n";
+    print "<td valign=top nowrap><b>".&ui_textarea('static_key', $in{'static_key'}, 20, 35, 'off')."</b></td>\n";
+    print "<td><b>&nbsp;</b></td>\n";
+print "</tr>\n";
 print &ui_table_end();
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
 

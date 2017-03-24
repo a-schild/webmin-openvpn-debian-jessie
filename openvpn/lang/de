@@ -211,6 +211,7 @@ up=up (Skript das ausgeführt wird, wenn die VPN-Verbindung hergestellt wurde)
 down=down (Skript das ausgeführt wird, wenn die VPN-Verbindung beendet wurde)
 up-pre=up-pre (Skript das ausgeführt wird, bevor die VPN-Verbindung hergestellt wird)
 down-pre=down-pre (Skript das ausgeführt wird, bevor die VPN-Verbindung beendet wird)
+statickey=Static Key
 new_client_title=Neuer VPN-Client
 new_clientmsg=Erstellung eines neuen VPN-Clients
 list_client_vpn=Liste der VPN-Clients

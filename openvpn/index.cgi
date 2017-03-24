@@ -70,7 +70,7 @@ if (!-d $config{'openvpn_home'}."/".$config{'openvpn_servers_subdir'}) {
 }
 
 # intestazione pagina
-&ui_print_header(undef, $text{'title_opnvpn'}." JESSIE PATCH", "", "intro", 1, 1, undef, 
+&ui_print_header(undef, $text{'title_opnvpn'}, "", "intro", 1, 1, undef, 
 		&help_search_link("openvpn", "man", "doc", "google")."<a href=\"index.cgi\">".$text{'title_opnvpn'}."</a>", 
 		undef, undef, &text('index_openvpn')." ".&text('version')." ".$config{'openvpn_version'}.", ".&text('index_openssl')." ".&text('version')." ".$config{'openssl_version'});
 
@@ -86,23 +86,23 @@ $ds_icon = { "icon" => "images/listactiveconnect.gif",
 	     "link" => "listactiveconnect.cgi?all=1" };
 &config_icons("global", $df_icon, $ht_icon, $ds_icon);
 
-print "<hr>\n";
+#print "<hr>\n";
 
 # form per nuova CA
-print &ui_form_start("create_ca.cgi", "POST");
-print &ui_table_start($text{'newca_title'});
-print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [1024,1024 ], [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'city'}, &ui_textbox('KEY_CITY', 'New York',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'org'}, &ui_textbox('KEY_ORG', 'My Org',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'email'}, &ui_textbox('KEY_EMAIL', 'me@my.org',50),'',[ 'nowrap',1 ])."\n";
-print &ui_table_end();
-print &ui_form_end([ [ "save", $text{'save'} ] ]);
+#print &ui_form_start("create_ca.cgi", "POST");
+#print &ui_table_start($text{'newca_title'});
+#print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'city'}, &ui_textbox('KEY_CITY', 'New York',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'org'}, &ui_textbox('KEY_ORG', 'My Org',50),'',[ 'nowrap',1 ])."</tr>\n";
+#print "<tr>".&ui_table_row($text{'email'}, &ui_textbox('KEY_EMAIL', 'me@my.org',50),'',[ 'nowrap',1 ])."\n";
+#print &ui_table_end();
+#print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
 $isrun = &is_openvpn_running();
 print "<hr>\n";

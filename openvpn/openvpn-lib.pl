@@ -270,7 +270,7 @@ sub ReadCA {
         if (-d $dir."/".$d and $d =~ /\w/) {
 	    $outca{$d} = { ca_path => $dir."/".$d, ca_name => $d , ca_error => "" };
 	    if (!-s $dir."/".$d."/ca.crt" or !-s $dir."/".$d."/ca.key" or !-s $dir."/".$d."/ca.pem") { $outca{$d}{ca_error} = $text{'error_correctly_ca'}; next; }
-	    if (!-s $dir."/".$d."/dh1024.pem" and !-s $dir."/".$d."/dh2048.pem" and !-s $dir."/".$d."/dh4096.pem") { $outca{$d}{ca_error} = $text{'error_correctly_ca'}; next; }
+	    if (!-s $dir."/".$d."/dh2048.pem" and !-s $dir."/".$d."/dh4096.pem") { $outca{$d}{ca_error} = $text{'error_correctly_ca'}; next; }
 	    if (!$outca{$d}{ca_error}) { $outca{$d}{ca_error} = "&nbsp;"; }
         }
     }
@@ -286,7 +286,7 @@ sub ReadCAtoList {
     foreach $d (sort @dirs) {
         if (-d $dir."/".$d and $d =~ /\w/) {
 	    if (!-s $dir."/".$d."/ca.crt" or !-s $dir."/".$d."/ca.key" or !-s $dir."/".$d."/ca.pem") { next; }
-	    if (!-s $dir."/".$d."/dh1024.pem" and !-s $dir."/".$d."/dh2048.pem" and !-s $dir."/".$d."/dh4096.pem") {  next; }
+	    if (!-s $dir."/".$d."/dh2048.pem" and !-s $dir."/".$d."/dh4096.pem") {  next; }
 	    push (@outca,[$d,$d]);
         }
     }
@@ -350,8 +350,13 @@ sub ReadCAKeys {
 		or ($type == 2 and -s $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'}.'/'.$file_name.'/'.$$cakeys{key_name}.'.server')
 		or ($type == 3 and !-s $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'}.'/'.$file_name.'/'.$$cakeys{key_name}.'.server')) {
 		if ($active == 1) {
-		    $$cakeys{key_expired} =~ /^(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
-    		    $time = Time::Local::timegm($6,$5,$4,$3,($2-1),"20".$1);
+    		    if ($$cakeys{key_expired} =~ /^\d{12}Z$/) {
+        		$$cakeys{key_expired} =~ /^(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
+        		$time = Time::Local::timegm($6,$5,$4,$3,($2-1),"20".$1);
+    		    } elsif ($$cakeys{key_expired} =~ /^\d{14}Z$/) {
+        		$$cakeys{key_expired} =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
+        		$time = Time::Local::timegm($7,$5,$4,$3,($2-1),$1);
+    		    }
     		    $mytime = time();
 		    if ($$cakeys{key_status} ne 'R' and $time > $mytime) {
 			$ok_active = 1;
@@ -456,11 +461,10 @@ sub ReadVPN {
 	    close F;
 
 	    if ($file =~ /\.conf$/) { $$datas{'VPN_STATUS'} = 1; } else { $$datas{'VPN_STATUS'} = 0; }
-
-        system('systemctl status openvpn@'.$namefile);
-        if($? == 0) { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
-
-	    
+            # Versione originale
+            # if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+            # Versione configurabile
+            if (-s $config{'openvpn_pid_path'}.'/'.$config{'openvpn_pid_prefix'}.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
 
 	    if ($only_managed == 1 and !exists($$datas{'management'})) { next; }
 	    if (exists($$datas{'secret'})) { $vpns_static{$$datas{'VPN_NAME'}} = $datas; } 
@@ -692,7 +696,8 @@ sub ReadStaticVPNConf {
     }
     open F, $namefile;
     $key_normal = ",port,proto,dev,user,group,verb,mute,";
-    $key_skip= ",status,log-append,secret,";
+    $key_skip= ",status,log-append,";
+    #$key_skip= ",status,log-append,secret,";
     $key_commands= ",up,down,";
     $key_key= ",comp-lzo,persist-key,persist-tun,";
     $in{'client-nat'} = 1;
@@ -730,6 +735,14 @@ sub ReadStaticVPNConf {
 		$value =~ /^(.+)\s+(.+)$/;
 		$in{'vpn_keepalive_ping'} = $1;
 		$in{'vpn_keepalive_ping-restart'} = $2;
+	    } elsif ($key eq "secret") {
+		$secretfile = $config{'openvpn_home'}.'/'. $value;
+		open FILE, $secretfile;
+                while ($line=<FILE>) {
+                    $static_key = $static_key . $line;
+                }
+		$in{"static_key"} = $static_key;
+		close FILE;
 	    } elsif ($key_commands =~ /,$key,/) {
 		$text="";
 		if ($value) {
@@ -928,7 +941,7 @@ sub PrintCommandWEB {
 
 sub is_openvpn_running {
     local ($found_inet, @openvpnpids);
-    @openvpnpids = &find_byname("openvpn");
+    @openvpnpids = &find_byname($config{'openvpn_path'});
     return(@openvpnpids); 
 }
 #devbr=Brücken-Device

@@ -1,2 +1,8 @@
-Gustavo Fukao <gustavofukao@gmail.com> 		:=> configuration for freebsd
-H. Spaethe (Ivan Dolvich) <h_spaethe@online.de> :=> implementation server bridge and translation in german and english
+Gustavo Fukao <gustavofukao@gmail.com> 				:=> configuration for freebsd
+H. Spaethe (Ivan Dolvich) <h_spaethe@online.de> 		:=> implementation server bridge and translation in german and english
+Olivier Beaudet <obeaudet@hotmail.com>				:=> implementation textarea static key in Static VPN
+Alexander Predeschly<einfachnuralex@gmx.net> 			:=> Resolved configuration proto TCP
+Pierpaolo Palazzo "Pierpaolo Palazzo" <ppalazzo@gmail.com>	:=> use on CentOS
+Percivaldi Daniele <d.percivaldi@intre.it>      		:=> configuration the prefix of pid
+Florian Lagg | IT-Valentin.at <Florian.Lagg@it-valentin.at>	:=> year date of expired ca in 4 digit
+

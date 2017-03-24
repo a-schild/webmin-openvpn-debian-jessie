@@ -60,7 +60,7 @@ print &ui_table_start($text{'newca_title'});
 print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [1024,1024 ], [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
+print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ])."</tr>\n";

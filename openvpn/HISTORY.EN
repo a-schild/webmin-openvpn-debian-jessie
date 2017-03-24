@@ -1,3 +1,23 @@
+**    Version 3.0 (2017-02-23)
+
+    Changes
+
+	01. Modfiy is_openvpn_running function for webmin 1.380 and later (as suggested by Roberto Resoli).
+	02. Implementation of static key textarea in static VPN (patch di Olivier Beaudet). 
+        03. Pierpaolo Palazzo's Patch: New modifications to library for use on CentOS.
+	04. The PID file prefix of OpenVPN processes is configurable (patch of Percivaldi Daniele).
+        05. Configuration "down_root_plugin" modified for openvpn 2.3.3 (as suggested by Percivaldi Daniele).
+        06. Modify of reading ca option expired so that it works is if the year date is shown in 4-digit (as suggested by Florian Lagg | IT-Valentin.at)
+    	    that if the year date is indicated with two-digit (as it was from us).
+        07. Remove option 1024 bit in creation keys and ca.
+        08. New file openvpn-ssl.cnf.
+	09. Compatible with debian8.
+
+    Bugs
+
+        01. Resolved configuration proto TCP (as suggested by Alexander Predeschly).
+
+
 **    Version 2.6 (2013-04-04)
 
     Bugs

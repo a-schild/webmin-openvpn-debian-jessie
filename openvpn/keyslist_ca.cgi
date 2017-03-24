@@ -50,8 +50,13 @@ print "</tr>\n";
 # rows
 foreach $key (sort keys %{$listca}) {
     print "<tr $cb>\n";
-	$$listca{$key}{key_expired} =~ /^(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
-	$time = Time::Local::timegm($6,$5,$4,$3,($2-1),"20".$1);
+	if ($$listca{$key}{key_expired} =~ /^\d{12}Z$/) {
+    	    $$listca{$key}{key_expired} =~ /^(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
+	    $time = Time::Local::timegm($6,$5,$4,$3,($2-1),"20".$1);	    
+	} elsif ($$listca{$key}{key_expired} =~ /^\d{14}Z$/) {
+	    $$listca{$key}{key_expired} =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z$/;
+	    $time = Time::Local::timegm($7,$5,$4,$3,($2-1),$1);
+	}
 	$mytime = time();
 	print "<td nowrap><a href=\"view_key.cgi?ca_name=".$in{'file_name'}."&key_name=".$$listca{$key}{key_name}."&key_id=".$$listca{$key}{key_id}."\" title=\"".$text{'viewkey'}."\">".$$listca{$key}{key_name}."</a></td>\n";
 	if (-f $$info_ca{'KEY_DIR'}.'/'.$in{'file_name'}.'/'.$$listca{$key}{key_name}.'.server') {

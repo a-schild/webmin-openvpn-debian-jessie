@@ -6,6 +6,7 @@ openvpn_servers_subdir=Servers Subdir (relative to OpenVPN Home) (*),0
 openvpn_path=Full path to openvpn (*),0
 openvpn_keys_subdir=Keys Subdir (*),0
 openvpn_pid_path=PID file path of running OpenVPN processes (*),0
+openvpn_pid_prefix=PID file prefix of OpenVPN processes,0
 openvpn_version=OpenVPN version,0
 openssl_home=OpenSSL cnf batch file (*),0
 openssl_path=Full path to ssl (*),0 

@@ -15,10 +15,10 @@ require './openvpn-lib.pl';
 &ReadParse();
 
 if ($in{'action'} eq "start" and $config{'start_cmd'}) {
-    $rv = &system_logged("$config{'start_cmd'}"."@"."$in{'vpn'}>/dev/null 2>&1 </dev/null");
+    $rv = &system_logged("$config{'start_cmd'} $in{'vpn'}>/dev/null 2>&1 </dev/null");
     if ($rv) { &error(&text('start_fail', $config{'start_cmd'}.' '.$in{'vpn'})); }
 } elsif ($in{'action'} eq "stop" and $config{'stop_cmd'}) {
-    $rv = &system_logged("$config{'stop_cmd'}"."@"."$in{'vpn'} >/dev/null 2>&1 </dev/null");
+    $rv = &system_logged("$config{'stop_cmd'} $in{'vpn'} >/dev/null 2>&1 </dev/null");
     if ($rv) { &error(&text('stop_fail', $config{'stop_cmd'}.' '.$in{'vpn'})); }
 } elsif ($in{'action'} eq "enable") {
     rename($config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled',$config{'openvpn_home'}.'/'.$in{'vpn'}.'.conf');

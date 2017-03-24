@@ -373,6 +373,12 @@ if ($error) {
         print "<td valign=top nowrap><b>".&ui_textarea('vpn_down', $in{'vpn_down'}, 5, 35, 'off')."</b></td>\n";
         print "<td valign=top nowrap><b>".&ui_textarea('client_down', $in{'client_down'}, 5, 35, 'off')."</b></td>\n";
     print "</tr>\n";
+    print "<tr>";
+    	print "<td valign=top><b>" . $text{'statickey'} . "</b></td>\n";
+    	print "<td valign=top nowrap><b>".&ui_textarea('static_key', $in{'static_key'}, 20, 35, 'off')."</b></td>\n";
+    	print "<td><b>&nbsp;</b></td>\n";
+    print "</tr>\n";
+
     print &ui_table_end();
     print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
@@ -392,9 +398,17 @@ if ($error) {
     if ($in{'vpn_keepalive_ping'} and $in{'vpn_keepalive_ping-restart'}) { $in{'vpn_keepalive'} = $in{'vpn_keepalive_ping'}.' '.$in{'vpn_keepalive_ping-restart'}; }
     else { delete($in{'vpn_keepalive'}); }
 
-    &system_logged($config{'openvpn_path'}." --genkey --secret ".$config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.'.key'." >/dev/null 2>&1 </dev/null");
-    chmod(0644,$config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.".key");
-    File::Copy::copy($config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.".key",$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'VPN_NAME'}.'/'.$in{'VPN_NAME'}.".key");
+    if ( $in{'static_key'} ) {
+       $secretfile = $config{'openvpn_home'}.'/'. $in{'VPN_NAME'} . ".key"; 
+    	open FILE, ">" . $secretfile;
+        print FILE $in{'static_key'};
+	close FILE; 
+    }
+    else {
+    	&system_logged($config{'openvpn_path'}." --genkey --secret ".$config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.'.key'." >/dev/null 2>&1 </dev/null");
+    }
+    	chmod(0644,$config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.".key");
+    	File::Copy::copy($config{'openvpn_home'}.'/'.$in{'VPN_NAME'}.".key",$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'VPN_NAME'}.'/'.$in{'VPN_NAME'}.".key");
     $in{'vpn_secret'} = $in{'VPN_NAME'}.'.key';
 
     if ($in{'modify'} == 1) {

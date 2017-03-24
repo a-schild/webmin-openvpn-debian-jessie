@@ -211,6 +211,7 @@ up=up (script execute after VPN up)
 down=down (script execute after VPN down)
 up-pre=up-pre (script execute before VPN up)
 down-pre=down-pre (script execute before VPN down)
+statickey=Static Key
 new_client_title=New VPN Client
 new_clientmsg=Creation of NEW VPN client
 list_client_vpn=VPN Client List
