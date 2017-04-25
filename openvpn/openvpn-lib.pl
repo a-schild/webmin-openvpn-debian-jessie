@@ -461,10 +461,8 @@ sub ReadVPN {
 	    close F;
 
 	    if ($file =~ /\.conf$/) { $$datas{'VPN_STATUS'} = 1; } else { $$datas{'VPN_STATUS'} = 0; }
-            # Versione originale
-            # if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
-            # Versione configurabile
-            if (-s $config{'openvpn_pid_path'}.'/'.$config{'openvpn_pid_prefix'}.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+
+            if(&system_logged(sprintf($config{'status_cmd'},$$datas{'VPN_NAME'}))) { $$datas{'VPN_ACTION'} = 0; } else { $$datas{'VPN_ACTION'} = 1; }
 
 	    if ($only_managed == 1 and !exists($$datas{'management'})) { next; }
 	    if (exists($$datas{'secret'})) { $vpns_static{$$datas{'VPN_NAME'}} = $datas; } 
