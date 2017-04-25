@@ -10,9 +10,16 @@ $ tar -cvzf openvpn-3.0.wbm.gz openvpn/
 
 # Install
 
-- Delete your current configuration: rm /etc/webmin/openvpn/config
-- Login to webmin interface.
-- Webmin -> Webmin Configuration -> Webmin Modules
+If you have a previous version running, remove it first:
+
+- Login to Webmin interface
+- Webmin > Webmin Configuration > Webmin Modules > Delete > OpenVPN + CA
+- Remove the module configuration from /etc/webmin/openvpn/config
+
+Now install the patched version:
+
+- Login to Webmin interface.
+- Webmin > Webmin Configuration > Webmin Modules > Install
 - Click "From ftp or http URL"
 - https://github.com/68b32/webmin-openvpn-debian-jessie/raw/master/openvpn-3.0.wbm.gz
 - Click "Install Module"
