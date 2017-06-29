@@ -456,7 +456,7 @@ if ($error) {
     &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
     while ($row=<CMD>) {
 	$row =~ s/\r*\n//g;
-	if ($row =~ /bit default key/i) { 
+	if ($row =~ /^[A-Z0-9\-]{3,}\s/) { 
 	    ($key) = split(' ',$row);
 	    push(@$a_cypher,[$key,$row]);	
 	}
