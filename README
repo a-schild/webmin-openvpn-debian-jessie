@@ -1,4 +1,4 @@
-This is the 3.0 version of the OpenVPN plugin for webmin with some minor changes to work with Debian Jessie. The changes should also work on all platforms the vanilla version in working on. More testing for confirmation  and pull requests are welcome.
+This is basically the 3.1 version of the OpenVPN plugin for webmin. Since the original development does not use a VCS i try to import new versions once in a while into this repository.
 
 # Dev & Build
 
@@ -6,7 +6,7 @@ After doing changes, build module package by simply using tar
 
 $ git clone https://github.com/68b32/webmin-openvpn-debian-jessie.git .
 $ ... apply your changes in openvpn/*
-$ tar -cvzf openvpn-3.0.wbm.gz openvpn/
+$ tar -cvzf openvpn.wbm.gz openvpn/
 
 # Install
 
@@ -21,5 +21,5 @@ Now install the patched version:
 - Login to Webmin interface.
 - Webmin > Webmin Configuration > Webmin Modules > Install
 - Click "From ftp or http URL"
-- https://github.com/68b32/webmin-openvpn-debian-jessie/raw/master/openvpn-3.0.wbm.gz
+- https://github.com/68b32/webmin-openvpn-debian-jessie/raw/master/openvpn.wbm.gz
 - Click "Install Module"

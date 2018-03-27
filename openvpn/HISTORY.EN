@@ -1,3 +1,17 @@
+**    Version 3.1 (2017-07-04)
+
+    Changes
+
+	01. Follow the instructions of Fulvio Fusco to optimize the code (through the creation of some subroutines).
+        02. Added in the configuration of a vpn server the section for down-root commands (as suggested by Fulvio Fusco).
+        03. Modify command strings start_cmd, stop_cmd, and status_cmd (as suggested by Falco Vennedey and reported by Bennie Sexton).
+        04. Added topology pareter in creating the VPN server (as reported by Björn Gaul)
+
+    Bugs
+
+	01. Modified the search string for the command used to get the list of encryption arguments ('openvpn --show-ciphers'),
+            as indicated by Andy Wright, Fulvio Fusco, Brad Gass and Stefano Buelow.
+
 **    Version 3.0 (2017-02-23)
 
     Changes
@@ -7,7 +21,7 @@
         03. Pierpaolo Palazzo's Patch: New modifications to library for use on CentOS.
 	04. The PID file prefix of OpenVPN processes is configurable (patch of Percivaldi Daniele).
         05. Configuration "down_root_plugin" modified for openvpn 2.3.3 (as suggested by Percivaldi Daniele).
-        06. Modify of reading ca option expired so that it works is if the year date is shown in 4-digit (as suggested by Florian Lagg | IT-Valentin.at)
+        06. Modify of reading ca option expired so that it works is if the year date is shown in 4-digit (as suggested by Florian Lagg | IT-Valentin.at and Giuseppe Setteducati)
     	    that if the year date is indicated with two-digit (as it was from us).
         07. Remove option 1024 bit in creation keys and ca.
         08. New file openvpn-ssl.cnf.

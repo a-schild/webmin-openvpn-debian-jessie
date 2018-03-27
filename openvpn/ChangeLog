@@ -1,3 +1,27 @@
+2017-07-04 11:35:43 marco (r19)
+
+        Ultimi doc per rilascio versione 3.1
+
+2017-07-03 12:18:47 marco (r18)
+
+        Aggiunto parametro topology in creazione server VPN
+
+2017-07-03 11:54:49 marco (r17)
+
+        Modificati in configurazione start_cmd, stop_cmd e status_cmd come suggerito da Falco Vennedey
+
+2017-07-03 11:14:20 marco (r16)
+
+        Modifiche per versione 3.1
+
+2017-03-01 15:39:29 marco (r15)
+
+        Modifiche per osservazioni di Fulvio Fusco
+
+2017-02-28 15:38:26 marco (r14)
+
+        Modifiche a seguito di feedback circa l'utilizzo di server VPN bridge da parte di Fulvio Fusco.
+
 2017-02-23 16:36:57 marco (r12)
 
 	Ultimi test e modifiche per versione 3.0 compatibile con debian8

@@ -24,7 +24,8 @@ if ($in{'action'} eq "start" and $config{'start_cmd'}) {
     rename($config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled',$config{'openvpn_home'}.'/'.$in{'vpn'}.'.conf');
 } elsif ($in{'action'} eq "disable") {
     # se attiva fermo
-    if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$in{'vpn'}.'.pid') {
+#    if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$in{'vpn'}.'.pid') {
+    if (-s $config{'openvpn_pid_path'}.'/'.$config{'openvpn_pid_prefix'}.$in{'vpn'}.'.pid') {
 	$rv = &system_logged("$config{'stop_cmd'} $in{'vpn'} >/dev/null 2>&1 </dev/null");
         if ($rv) { &error(&text('stop_fail', $config{'stop_cmd'}.' '.$in{'vpn'})); }
     }

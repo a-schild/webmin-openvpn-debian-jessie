@@ -1,17 +1,32 @@
+**    Version 3.1 (2017-07-04)
+
+    Changes
+
+	01. Seguito le indicazioni di Fulvio Fusco per ottimizzare il codice (attraverso la creazione di alcune subroutine).
+	02. Aggiunto nella configurazione di un server vpn la sezione per i comandi down-root (come suggerito da Fulvio Fusco).
+	03. Modificate le stringhe dei comandi start_cmd, stop_cmd e status_cmd (come suggerito da Falco Vennedey e segnalato da Bennie Sexton).
+	04. Aggiunto paraetro topology nella creazione del server VPN (come segnalato da Björn Gaul)
+
+    Bugs
+
+	01. Modificato la stringa di ricerca relativa al comando utilizzato per ottenere la lista degli argomenti di cifratura ('openvpn --show-ciphers'),
+            come indicato da Andy Wright, Fulvio Fusco, Brad Gass e Stefano Buelow.
+
+
 **    Version 3.0 (2017-02-23)
 
     Changes
 
 	01. Modifica a funzione is_openvpn_running per diverso funzionamento di find_byname da webmin 1.380 in poi (segnalazione di Roberto Resoli).
-	02. Implementazione textarea static key ion VPN statica (patch di Olivier Beaudet).
+	02. Implementazione textarea static key in VPN statica (patch di Olivier Beaudet).
         03. Patch di Pierpaolo Palazzo: modifica ad alcune librerie per rendere utilizzabile anche su CentOS.
 	04. Il prefisso dei PID files dei processi OpenVPN e' configurabile (patch di Percivaldi Daniele).
 	05. Modifica configurazione "down_root_plugin" per openvpn 2.3.3 (come suggerito da Percivaldi Daniele).
 	06. Modifica lettura di parametro expired di ca in modo che funzioni sia se la data e' indicata con anno in 4 cifre 
-	    (come suggerito da Florian Lagg | IT-Valentin.at) che se la data e' indicata con anno in 2 cifre (come era da noi).
+	    (come suggerito da Florian Lagg | IT-Valentin.at e Giuseppe Setteducati) che se la data e' indicata con anno in 2 cifre (come era da noi).
 	07. Rimossa possibilita' di creazione chiavi e ca a 1024 bit.
 	08. Nuova versione del file openvpn-ssl.cnf.
-	09. Compativibile con debian8.
+	09. Compatibile con debian8.
 
     Bugs
     

@@ -393,6 +393,38 @@ sub ReadCAKeys {
     }
 }
 
+# array derivante da comando 'openvpn --show-ciphers': il valore e' il primo campo ed etichetta tutto
+sub ReadCiphers {
+   local ($row,$key,$a_cypher);
+    $a_cypher = [];
+    &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
+    while ($row=<CMD>) {
+        $row =~ s/\r*\n//g;
+        if (($row =~ /bit default key,/i) or ($row =~ /bit key,/i) or ($row =~ /bit key by default,/i)) {
+            ($key) = split(' ',$row);
+            push(@$a_cypher,[$key,$row]);
+        }
+    }
+    close(CMD);
+    return($a_cypher);
+}
+
+# array of aviable ethernet devices
+sub ReadEths {
+    local ($row,$a_eth,$dev);
+    $dev = $_[0];
+    $a_eth = [];
+    &open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
+    while ($row=<CMD>) {
+	$row =~ s/\r*\n//g;
+	if (($row ne $dev) && ($row !~ /^tap\d+/)) {
+    	    push(@$a_eth,[$row,$row]);
+	}
+    }
+    close(CMD);
+    return($a_eth);
+}
+
 # rimuove files e directory della CA
 sub remove_CA {
     local ($file_name,$dir,$row);
@@ -461,8 +493,11 @@ sub ReadVPN {
 	    close F;
 
 	    if ($file =~ /\.conf$/) { $$datas{'VPN_STATUS'} = 1; } else { $$datas{'VPN_STATUS'} = 0; }
-
-            if(&system_logged(sprintf($config{'status_cmd'},$$datas{'VPN_NAME'}))) { $$datas{'VPN_ACTION'} = 0; } else { $$datas{'VPN_ACTION'} = 1; }
+            # Versione originale
+            # if (-s $config{'openvpn_pid_path'}.'/openvpn.'.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+            # Versione configurabile
+            #if (-s $config{'openvpn_pid_path'}.'/'.$config{'openvpn_pid_prefix'}.$namefile.'.pid') { $$datas{'VPN_ACTION'} = 1; } else { $$datas{'VPN_ACTION'} = 0; }
+	    if (&system_logged(sprintf($config{'status_cmd'},$$datas{'VPN_NAME'}))) { $$datas{'VPN_ACTION'} = 0; } else { $$datas{'VPN_ACTION'} = 1; }
 
 	    if ($only_managed == 1 and !exists($$datas{'management'})) { next; }
 	    if (exists($$datas{'secret'})) { $vpns_static{$$datas{'VPN_NAME'}} = $datas; } 
@@ -612,12 +647,14 @@ sub ReadVPNConf {
     $key_normal = ",port,proto,dev,cipher,max-clients,user,group,verb,mute,fragment,tun-mtu,mssfix,chroot,local,";
     $key_skip= ",ca,cert,dh,status,log-append,crl-verify,client-config-dir,";
     $key_commands= ",up,down,up-pre,down-pre,";
+    $down_root_plugin= $config{'down_root_plugin'}.' ';
     $key_key= ",tls-server,ifconfig-pool-persist,client-to-client,duplicate-cn,tls-auth,comp-lzo,persist-key,persist-tun,float,ccd-exclusive,";
     while ($row=<F>) {
 	$row =~ s/\r*\n//g;
 	$row =~ s/^;.+$//;
 	$row =~ s/^#.+$//; #commento
-	$row =~ s/^plugin.*$//; #plugins only used by me for down-root-script-solution
+	# le opzioni 'plugin' non verranno trascurate
+	#$row =~ s/^plugin.*$//; #plugins only used by me for down-root-script-solution
 	$row =~ s/\s+$//;
 	if ($row) {
 	    if ($row =~ /\s/) {
@@ -655,6 +692,25 @@ sub ReadVPNConf {
 		$value =~ /^(.+)\s+(.+)$/;
 		$in{'keepalive_ping'} = $1;
 		$in{'keepalive_ping-restart'} = $2;
+            } elsif (($key eq "plugin") && $value =~ /^$config{'down_root_plugin'}/) {
+                $key = 'down-root';
+                $value =~ s/^$config{'down_root_plugin'}\s+//;  # estrae il nome dello script
+                $value =~ s/"//g; #" 				# elimina le virgolette!!!
+        	$text="";
+                if ($value) {
+                    if (-s $value) {
+                        open U,$value;
+                        while ($row=<U>) { $text .= $row; }
+                        close U;
+                        $text =~ s/\r+//g;
+			#
+			# cut off our commands
+                        $text =~ s/.*##### add your commands below #####$//smg;
+            		$in{$key} = $text;
+                    } else {
+                        delete($in{$key});
+                    }
+                }
 	    } elsif ($key_commands =~ /,$key,/) {
 		$text="";
 		if ($value) {
@@ -664,8 +720,8 @@ sub ReadVPNConf {
 			close U;	
 			$in{$key} = $text;
 			$in{$key} =~ s/\r+//g;
-#
-# cut of our commands
+			#
+			# cut of our commands
 			$in{$key} =~ s/.*##### add your commands below #####$//smg;
 		    } else {
 			delete($in{$key});
@@ -677,6 +733,8 @@ sub ReadVPNConf {
 	    } elsif ($key_skip =~ /,$key,/) {
 		next;
 	    } else {
+		# ora tra le configurazioni addizionali può essere specificato 
+		# anche un plugin purché diverso da quello di down-root
 		$in{'adds_conf'} .= $row."\n";
 	    }
 	}
@@ -821,7 +879,7 @@ sub ReadClientConf {
     open F, $namefile;
     $key_normal = ",proto,dev,cipher,user,group,verb,mute,fragment,tun-mtu,mssfix,";
     $key_skip= ",cert,key,dh,client,resolv-retry,nobind,";
-    $key_commands= ",up,down,up-pre,down-pre,";
+    $key_commands= ",up,down,up-pre,down-pre,down-root,";
     $key_key= ",tls-auth,comp-lzo,persist-key,persist-tun,float,nobind,resolv-retry,";
     while ($row=<F>) {
 	$row =~ s/\r*\n//g;

@@ -365,24 +365,25 @@ if ($in{'dev'} =~ /tap/){
 }
 
 # array of aviable ethernet devices
-$a_eth = [];
-&open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
-while ($row=<CMD>) {
-    $row =~ s/\r*\n//g;
-    if (($row ne $in{'devbr'}) && ($row !~ /^tap\d+/)) {
-	push(@$a_eth,[$row,$row]);
-    }
-}
-close(CMD);
+$a_eth = &ReadEths($in{'devbr'});
+#$a_eth = [];
+#&open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
+#while ($row=<CMD>) {
+#    $row =~ s/\r*\n//g;
+#    if (($row ne $in{'devbr'}) && ($row !~ /^tap\d+/)) {
+#	push(@$a_eth,[$row,$row]);
+#    }
+#}
+#close(CMD);
 
 # generate our bridge commands
 if ($in{'dev'} =~ /^tap/){
     $bridgestart_cmd = $config{'br_start_cmd'}.' --setbr br='.$in{'devbr'}.' eth='.$in{'netdevbr'}.' tap='.$in{'dev'}.' ip='.$in{'ipbr'}.' netmask='.$in{'netmaskbr'}.' > /dev/null';
     $bridgeend_cmd = $config{'br_end_cmd'}.' --killbridge --seteth br='.$in{'devbr'}.' eth='.$in{'netdevbr'}.' tap='.$in{'dev'}.' ip='.$in{'ipbr'}.' netmask='.$in{'netmaskbr'}.' > /dev/null';
-    $in{'down-root'} = '## DO NOT MODIFY ##';
+#    $in{'down-root'} = '## DO NOT MODIFY ##';
 }
 
-# some vars 'needed' to generate the up/down/up-pre/down-pre scripts
+# some vars 'needed' to generate the up/down/up-pre/down-pre/down-root scripts
 $bash_shebang = "#!/bin/bash";
 $usrscript_border = "##### add your commands below #####";
 
@@ -393,7 +394,7 @@ foreach $k (qw/up down up-pre down-pre down-root/) {
     }
     
     # if no up|down user commands are entered, but we have a tap-device, $in{$k} is set to a command
-    if(($k =~ /^up$/) && (!$in{$k}) && ($in{'dev'} =~ /^tap/)){
+    if(($k =~ /^up$/ || $k =~ /^down-root$/) && (!$in{$k}) && ($in{'dev'} =~ /^tap/)){
 	$in{$k} = '### Add your commands here ###';
     }
 
@@ -452,16 +453,17 @@ if ($error) {
     }
 
     # array derivante da comando 'openvpn --show-ciphers': il valore e' il primo campo ed etichetta tutto
-    $a_cypher = [];
-    &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
-    while ($row=<CMD>) {
-	$row =~ s/\r*\n//g;
-	if ($row =~ /bit default key/i) { 
-	    ($key) = split(' ',$row);
-	    push(@$a_cypher,[$key,$row]);	
-	}
-    }
-    close(CMD);
+    $a_cypher = &ReadCiphers();
+#    $a_cypher = [];
+#    &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
+#    while ($row=<CMD>) {
+#	$row =~ s/\r*\n//g;
+#	if (($row =~ /bit default key/i) or ($row =~ /bit key,/i) or ($row =~ /bit key by default,/i)) {
+#	    ($key) = split(' ',$row);
+#	    push(@$a_cypher,[$key,$row]);	
+#	}
+#    }
+#    close(CMD);
 
     # estrarre elenco chiavi server [della ca selezionata]
     $a_server = &ReadCAKeys($in{'ca_name'},2,1);
@@ -510,7 +512,7 @@ if ($error) {
 
 ##############################
 ##############################
-if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elements(); }
+    if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elements(); }
 ##############################
 ##############################
 
@@ -549,6 +551,7 @@ if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elemen
     print "<tr>".&ui_table_row($text{'mssfix'}, &ui_textbox('mssfix',$in{'mssfix'},4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'chroot'}.' '.$config{'openvpn_home'}, &ui_select('chroot', $in{'chroot'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'topology'}, &ui_textbox('topology','100',4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'width=100%');
@@ -556,6 +559,7 @@ if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elemen
     print "<tr>".&ui_table_row($text{'up'}, &ui_textarea('up', $in{'up'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', $in{'down-pre'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'down'}, &ui_textarea('down', $in{'down'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'down-root'}, &ui_textarea('down-root', $in{'down-root'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
@@ -586,6 +590,7 @@ if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elemen
 	    $in{'tls-auth'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/ta.key 0';
 	} else { delete($in{'tls-auth'}); }
     }
+
     if ($in{'dev'} =~ /tun/){
     	$in{'server'} = $in{'network'}.' '.$in{'netmask'}; 
     }
@@ -613,12 +618,12 @@ if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elemen
     }
 
     if ($in{'dev'} =~ /tun/){
-    	foreach $k (qw/port proto dev ca cert key dh server crl-verify/) {
-		print OUT $k.' '.$in{$k}."\n";
+    	foreach $k (qw/port proto dev ca cert key dh topology server crl-verify/) {
+	    if ($in{$k}) { print OUT $k.' '.$in{$k}."\n"; }
     	}
     }elsif ($in{'dev'} =~ /tap/){
-    	foreach $k (qw/port proto dev ca cert key dh server-bridge crl-verify/) {
-		print OUT $k.' '.$in{$k}."\n";
+    	foreach $k (qw/port proto dev ca cert key dh topology server-bridge crl-verify/) {
+	    if ($in{$k}) { print OUT $k.' '.$in{$k}."\n"; }
     	}
     }
 	
@@ -661,8 +666,7 @@ if ($in{'modify'} == 1 and $dev and $dev eq 'tap') { print bridge_control_elemen
 	print OUT 'plugin '.$config{'down_root_plugin'}.' "'.$config{'openvpn_home'}.'/'.$config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/bin/'.$in{'VPN_NAME'}.'.down-root"'."\n"; 
     }
 
- 
-    if ($in{'adds_conf'}) { print OUT $in{'adds_conf'}."\n"; }
+     if ($in{'adds_conf'}) { print OUT $in{'adds_conf'}."\n"; }
 
     close OUT;
 

@@ -41,27 +41,29 @@ foreach $us (@groups) {
 }
 
 # array derivante da comando 'openvpn --show-ciphers': il valore e' il primo campo ed etichetta tutto
-$a_cypher = [];
-&open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
-while ($row=<CMD>) {
-    $row =~ s/\r*\n//g;
-    if ($row =~ /bit default key/i) { 
-	($key) = split(' ',$row);
-	push(@$a_cypher,[$key,$row]);	
-    }
-}
-close(CMD);
+$a_cypher = &ReadCiphers();
+#$a_cypher = [];
+#&open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
+#while ($row=<CMD>) {
+#    $row =~ s/\r*\n//g;
+#    if (($row =~ /bit default key/i) or ($row =~ /bit key,/i) or ($row =~ /bit key by default,/i)) {
+#	($key) = split(' ',$row);
+#	push(@$a_cypher,[$key,$row]);	
+#    }
+#}
+#close(CMD);
 
 #array of aviable ethernet devices
-$a_eth = [];
-&open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
-while ($row=<CMD>) {
-	$row =~ s/\r*\n//g;
-	if (($row ne $in{'devbr'}) && (($row !~ /^tap\d/))) {
-		push(@$a_eth,[$row,$row]);
-	}
-}
-close(CMD);
+$a_eth = &ReadEths($in{'devbr'});
+#$a_eth = [];
+#&open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
+#while ($row=<CMD>) {
+#	$row =~ s/\r*\n//g;
+#	if (($row ne $in{'devbr'}) && (($row !~ /^tap\d/))) {
+#		push(@$a_eth,[$row,$row]);
+#	}
+#}
+#close(CMD);
 
 # estrarre elenco chiavi server [della ca selezionata]
 $a_server = &ReadCAKeys($in{'ca'},2,1);
@@ -124,6 +126,7 @@ if (@$a_server) {
     print "<tr>".&ui_table_row($text{'mssfix'}, &ui_textbox('mssfix','',4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', 0, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'chroot'}.' '.$config{'openvpn_home'}, &ui_select('chroot', 0, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'topology'}, &ui_textbox('topology','100',4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', '', 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'width=100%');
@@ -131,6 +134,7 @@ if (@$a_server) {
     print "<tr>".&ui_table_row($text{'up'}, &ui_textarea('up', '', 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', '', 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'down'}, &ui_textarea('down', '', 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'down-root'}, &ui_textarea('down-root', '', 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_form_end([ [ "save", $text{'save'} ] ]);
 } else {
