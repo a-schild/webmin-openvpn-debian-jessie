@@ -126,7 +126,7 @@ if (@$a_server) {
     print "<tr>".&ui_table_row($text{'mssfix'}, &ui_textbox('mssfix','',4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', 0, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'chroot'}.' '.$config{'openvpn_home'}, &ui_select('chroot', 0, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-    print "<tr>".&ui_table_row($text{'topology'}, &ui_select('topology', $in{'topology'}, [ ['0',$text{'subnet'}],['1',$text{'p2p'}], ['2',$text{'net30'}] ]),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'topology'}, &ui_select('topology', $in{'topology'}, [ ['subnet',$text{'subnet'}],['p2p',$text{'p2p'}], ['net30',$text{'net30'}] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', '', 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'width=100%');
