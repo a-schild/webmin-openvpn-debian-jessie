@@ -155,6 +155,14 @@ print "<tr>";
     print "<td valign=top nowrap><b>".&ui_textarea('vpn_adds_conf', $in{'vpn_adds_conf'}, 5, 35, 'off')."</b></td>\n";
     print "<td valign=top nowrap><b>".&ui_textarea('client_adds_conf', $in{'client_adds_conf'}, 5, 35, 'off')."</b></td>\n";
 print "</tr>\n";
+print "<tr>";
+    print "<td valign=top><b>".$text{'topology'}."</b></td>\n";
+    print "<td valign=top nowrap><b>".&ui_select('topology', $in{'topology'}, [ ['subnet','subnet'],['net30','net30'],['p2p','p2p'] ])."</b></td>\n";
+    print "<td valign=top nowrap><b>".$text{'automatic'}."</b></td>\n";
+print "</tr>\n";
+
+
+
 print &ui_table_end();
 print &ui_table_start($text{'commands'});
 print "<tr><td>\n";

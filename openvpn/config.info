@@ -13,6 +13,7 @@ openssl_path=Full path to ssl (*),0
 openssl_version=SSL version,0
 start_cmd=Command to start OpenVPN (*),0
 stop_cmd=Command to stop OpenVPN (*),0
+status_cmd=Command to get status OpenVPN (*),0
 zip_cmd=Zip Command,0
 log_lines=Number of lines of log file to display,0,6
 log_refresh=Seconds between log view refreshes,3,Never
