@@ -644,7 +644,7 @@ sub ReadVPNConf {
 	$namefile = $config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled';
     }
     open F, $namefile;
-    $key_normal = ",port,proto,dev,cipher,max-clients,user,group,verb,mute,fragment,tun-mtu,mssfix,chroot,local,";
+    $key_normal = ",port,proto,dev,cipher,max-clients,user,group,verb,mute,fragment,tun-mtu,mssfix,chroot,local,topology,";
     $key_skip= ",ca,cert,dh,status,log-append,crl-verify,client-config-dir,";
     $key_commands= ",up,down,up-pre,down-pre,";
     $down_root_plugin= $config{'down_root_plugin'}.' ';
@@ -751,7 +751,7 @@ sub ReadStaticVPNConf {
 	$namefile = $config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled';
     }
     open F, $namefile;
-    $key_normal = ",port,proto,dev,user,group,verb,mute,";
+    $key_normal = ",port,proto,dev,user,group,verb,mute,topology,";
     $key_skip= ",status,log-append,";
     #$key_skip= ",status,log-append,secret,";
     $key_commands= ",up,down,";
@@ -824,7 +824,7 @@ sub ReadStaticVPNConf {
     close F;
     open F, $config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'vpn'}.'/'.$in{'vpn'}.'.conf';
     $key_normal = ",port,verb,mute,";
-    $key_skip= ",status,log-append,proto,dev,ifconfig,comp-lzo,user,group,persist-key,persist-tun,keepalive,secret,";
+    $key_skip= ",status,log-append,proto,dev,ifconfig,comp-lzo,user,group,persist-key,persist-tun,keepalive,secret,topology,";
     $key_commands= ",up,down,";
     $key_key= ",";
     while ($row=<F>) {
