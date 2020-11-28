@@ -216,6 +216,7 @@ foreach $file (@files) {
 	$ok_server = '';
 	$ok_ifconfig = '';
 	$ok_secret = 0;
+	
 	open F,$config{'openvpn_home'}.'/'.$file;
 	while ($row=<F>) {
 	    chomp($row);
@@ -551,7 +552,7 @@ if ($error) {
     print "<tr>".&ui_table_row($text{'mssfix'}, &ui_textbox('mssfix',$in{'mssfix'},4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'chroot'}.' '.$config{'openvpn_home'}, &ui_select('chroot', $in{'chroot'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-    print "<tr>".&ui_table_row($text{'topology'}, &ui_textbox('topology','100',4),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'topology'}, &ui_select('topology', $in{'topology'}, [ ['subnet','subnet'],['net30','net30'],['p2p','p2p'] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'width=100%');
@@ -597,8 +598,10 @@ if ($error) {
     if ($in{'dev'} =~ /tap\d/){
     	$in{'server-bridge'} = $in{'ipbr'}.' '.$in{'netmaskbr'}.' '.$in{'iprangestart'}.' '.$in{'iprangeend'}.' #@@ '.$in{'devbr'}.' '.$in{'netdevbr'};
     }
+    if ($in{'modify'} != 1) {
     $in{'status'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/openvpn-status.log';
     $in{'log-append'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/openvpn.log';
+    }
     if ($in{'ifconfig-pool-persist'} == 1) {
 	$in{'ifconfig-pool-persist'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/ipp.txt';
     } else {
