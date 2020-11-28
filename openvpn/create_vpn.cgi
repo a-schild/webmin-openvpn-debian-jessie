@@ -534,7 +534,7 @@ if ($error) {
     print "<tr>".&ui_table_row($text{'client-to-client'}, &ui_select('client-to-client', $in{'client-to-client'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'duplicate-cn'}, &ui_select('duplicate-cn', $in{'duplicate-cn'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'tls-auth'}, &ui_select('tls-auth', $in{'tls-auth'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, $text{'yes'},'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, &ui_select('ccd-exclusive', $in{'ccd-exclusive'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'cipher'}, &ui_select('cipher', $in{'cipher'}, $a_cypher),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', $in{'comp-lzo'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'max-clients'}, &ui_textbox('max-clients',$in{'max-clients'},4),'',[ 'width="50%"' ])."</tr>\n";
