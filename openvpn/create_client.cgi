@@ -175,11 +175,11 @@ if ($error) {
     print &ui_table_row($text{'key_client'}, $text{'automatic'});
     print &ui_table_row($text{'dh'}, 'dh'.$$info_ca{'KEY_SIZE'}.'.pem');
     print &ui_table_row($text{'remote'}, $text{'remote_url'}.': '.&ui_textbox('remote_url',$in{'remote_url'},12).' '.$text{'remote_port'}.': '.$in{'remote_port'});
-	print &ui_table_row($text{'tls-auth'}, $text{'yes'}." ".$text{'automatic_server'});
     if ($server_info{'tls-auth'} == 1) {
+	print &ui_table_row($text{'tls-auth'}, $text{'yes'}." ".$text{'automatic_server'});
     } else {
 	print &ui_table_row($text{'tls-auth'}, $text{'no'}." ".$text{'automatic_server'}); 
-    }
+	}
     print &ui_table_row($text{'cipher'}, $in{'cipher'}." ".$text{'automatic_server'});
     print &ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', $in{'comp-lzo'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
     print &ui_table_row($text{'user'}, &ui_select('user', $in{'user'}, $a_user));
