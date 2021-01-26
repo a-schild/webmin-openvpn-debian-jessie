@@ -400,7 +400,7 @@ sub ReadCiphers {
     &open_execute_command(CMD, $config{'openvpn_path'} . ' --show-ciphers', 2);
     while ($row=<CMD>) {
         $row =~ s/\r*\n//g;
-        if (($row =~ /bit default key,/i) or ($row =~ /bit key,/i) or ($row =~ /bit key by default,/i)) {
+        if (($row =~ /bit default key/i) or ($row =~ /bit key/i) or ($row =~ /bit key by default/i)) {
             ($key) = split(' ',$row);
             push(@$a_cypher,[$key,$row]);
         }
