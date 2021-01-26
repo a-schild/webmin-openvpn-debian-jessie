@@ -1,4 +1,4 @@
-This is the 3.2 version of the OpenVPN plugin for webmin.
+This is the 3.3 version of the OpenVPN plugin for webmin.
 Since the original development does not use a VCS i try to import new versions once in a while into this repository.
 
 # Dev & Build

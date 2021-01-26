@@ -198,8 +198,8 @@ if ($error) {
     print &ui_table_start($text{'commands'},'',2);
     print &ui_table_row($text{'up-pre'}, &ui_textarea('up-pre', $in{'up-pre'}, 3, 45, 'off'));
     print &ui_table_row($text{'up'}, &ui_textarea('up', $in{'up'}, 3, 45, 'off'));
-    print &ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', $in{'down-pre'}, 3, 45, 'off');
-    print &ui_table_row($text{'down'}, &ui_textarea('down', $in{'down'}, 3, 45, 'off');
+    print &ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', $in{'down-pre'}, 3, 45, 'off'));
+    print &ui_table_row($text{'down'}, &ui_textarea('down', $in{'down'}, 3, 45, 'off'));
     print &ui_table_end();
     print &ui_table_start($text{'ccdfile'},'',2);
     print &ui_table_row($text{'ccdfile-content'}, &ui_textarea('ccdfile', '', 3, 45, 'off'));
