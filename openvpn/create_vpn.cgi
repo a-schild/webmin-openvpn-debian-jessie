@@ -216,6 +216,7 @@ foreach $file (@files) {
 	$ok_server = '';
 	$ok_ifconfig = '';
 	$ok_secret = 0;
+	
 	open F,$config{'openvpn_home'}.'/'.$file;
 	while ($row=<F>) {
 	    chomp($row);
@@ -533,7 +534,7 @@ if ($error) {
     print "<tr>".&ui_table_row($text{'client-to-client'}, &ui_select('client-to-client', $in{'client-to-client'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'duplicate-cn'}, &ui_select('duplicate-cn', $in{'duplicate-cn'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'tls-auth'}, &ui_select('tls-auth', $in{'tls-auth'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, $text{'yes'},'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, &ui_select('ccd-exclusive', $in{'ccd-exclusive'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'cipher'}, &ui_select('cipher', $in{'cipher'}, $a_cypher),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', $in{'comp-lzo'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'max-clients'}, &ui_textbox('max-clients',$in{'max-clients'},4),'',[ 'width="50%"' ])."</tr>\n";
@@ -597,8 +598,10 @@ if ($error) {
     if ($in{'dev'} =~ /tap\d/){
     	$in{'server-bridge'} = $in{'ipbr'}.' '.$in{'netmaskbr'}.' '.$in{'iprangestart'}.' '.$in{'iprangeend'}.' #@@ '.$in{'devbr'}.' '.$in{'netdevbr'};
     }
+    if ($in{'modify'} != 1) {
     $in{'status'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/openvpn-status.log';
     $in{'log-append'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/openvpn.log';
+    }
     if ($in{'ifconfig-pool-persist'} == 1) {
 	$in{'ifconfig-pool-persist'} = $config{'openvpn_servers_subdir'}.'/'.$in{'VPN_NAME'}.'/logs/ipp.txt';
     } else {
