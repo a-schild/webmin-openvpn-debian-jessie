@@ -155,7 +155,6 @@ if ($error) {
     print &ui_hidden('proto',$in{'proto'});
     print &ui_hidden('remote_port',$in{'remote_port'});
     print &ui_hidden('cipher',$in{'cipher'});
-    print &ui_hidden('dh','dh'.$$info_ca{'KEY_SIZE'}.'.pem');
     print &ui_hidden('modify',$in{'modify'});
     print &ui_hidden('tls-auth',$server_info{'tls-auth'});
     #print &ui_hidden('dev',$server_info{'dev'});
@@ -173,7 +172,6 @@ if ($error) {
     print &ui_table_row($text{'choose_client'}, $text{'automatic_name'});
     print &ui_table_row($text{'cert_client'}, $text{'automatic'});
     print &ui_table_row($text{'key_client'}, $text{'automatic'});
-    print &ui_table_row($text{'dh'}, 'dh'.$$info_ca{'KEY_SIZE'}.'.pem');
     print &ui_table_row($text{'remote'}, $text{'remote_url'}.': '.&ui_textbox('remote_url',$in{'remote_url'},12).' '.$text{'remote_port'}.': '.$in{'remote_port'});
     if ($server_info{'tls-auth'} == 1) {
 	print &ui_table_row($text{'tls-auth'}, $text{'yes'}." ".$text{'automatic_server'});
@@ -254,7 +252,7 @@ if ($error) {
        print WCLI "proto".' '.$in{proto}."\r\n";
     }
 
-    foreach $k (qw/dev ca dh cert key remote/) {
+    foreach $k (qw/dev ca cert key remote/) {
         print OUT $k.' '.$in{$k}."\n";
         print WCLI $k.' '.$in{$k}."\r\n";
     }
