@@ -879,7 +879,7 @@ sub ReadClientConf {
     $key_normal = ",proto,dev,cipher,user,group,verb,mute,fragment,tun-mtu,mssfix,";
     $key_skip= ",cert,key,dh,client,resolv-retry,nobind,";
     $key_commands= ",up,down,up-pre,down-pre,down-root,";
-    $key_key= ",tls-auth,comp-lzo,persist-key,persist-tun,float,nobind,resolv-retry,";
+    $key_key= ",tls-auth,comp-lzo,persist-key,persist-tun,float,nobind,resolv-retry,auth-nocache,";
     while ($row=<F>) {
 	$row =~ s/\r*\n//g;
 	$row =~ s/;.+$//;

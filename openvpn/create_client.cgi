@@ -191,6 +191,7 @@ if ($error) {
     print "<tr>".&ui_table_row($text{'fragment'}, &ui_textbox('fragment',$in{'fragment'},4),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'mssfix'}, $in{'mssfix'}." ".$text{'automatic_server'})."</tr>\n";
     print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'auth-nocache'}, &ui_select('auth-nocache', $in{'auth-nocache'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'width=100%');
@@ -276,7 +277,7 @@ if ($error) {
     }
 
     # se 1 allora scrivo solo la chiave altrimenti non la scrivo
-    foreach $k (qw/comp-lzo persist-key persist-tun float/) {
+    foreach $k (qw/comp-lzo persist-key persist-tun float auth-nocache/) {
 	if ($in{$k} == 1) { 
 	    print OUT $k."\n"; 
 	    print WCLI $k."\r\n"; 
