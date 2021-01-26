@@ -100,7 +100,8 @@ if (@$a_clients) {
     print &ui_table_row($text{'fragment'}, &ui_textbox('fragment','',4));
     print &ui_table_row($text{'mssfix'}, $in{'mssfix'}." ".$text{'automatic_server'});
     print &ui_table_row($text{'float'}, &ui_select('float', 1, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
-    print &ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', '', 5, 45, 'off'));
+	print &ui_table_row($text{'auth-nocache'}, &ui_select('auth-nocache', $in{'auth-nocache'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ])); 
+	print &ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', '', 5, 45, 'off'));
     print &ui_table_end();
     print &ui_table_start($text{'commands'},'',2);
     print &ui_table_row($text{'up-pre'}, &ui_textarea('up-pre', '', 3, 45, 'off'));

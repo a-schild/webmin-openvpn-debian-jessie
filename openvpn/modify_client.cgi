@@ -139,6 +139,7 @@ if ($server_info{'mssfix'} == $in{'mssfix'}) {
 }
 
 print &ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
+print &ui_table_row($text{'auth-nocache'}, &ui_select('auth-nocache', $in{'auth-nocache'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
 print &ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'));
 print &ui_table_end();
 print &ui_table_start($text{'commands'},'',2);
