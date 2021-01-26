@@ -64,7 +64,7 @@ $stream = "";
 $wadir = POSIX::getcwd();
 chdir($dirout);
 
-if ($in{'format'} == 'single') {
+if ($in{'format'} =~ '/single/') {
     $fileout= $in{'vpn'}.'_'.$in{'client'}.'.ovpn';
     open( my $fh, '>', $fileout) or die "Could not open output file";
     # Append client.ovpn to complete .ovpn file
