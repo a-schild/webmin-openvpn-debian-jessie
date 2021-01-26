@@ -414,7 +414,8 @@ sub ReadEths {
     local ($row,$a_eth,$dev);
     $dev = $_[0];
     $a_eth = [];
-    &open_execute_command(CMD, 'ifconfig|grep -i :ethernet |awk \'{print $1}\'', 2);
+    &open_execute_command(CMD, 'ip -o link | grep -i link/ether |awk \'{print substr($2, 1, length($2)-1)}\'', 2);
+#    &open_execute_command(CMD, 'ifconfig|grep -i "[:(]ethernet" |awk \'{print $1}\'', 2);
     while ($row=<CMD>) {
 	$row =~ s/\r*\n//g;
 	if (($row ne $dev) && ($row !~ /^tap\d+/)) {
@@ -1010,10 +1011,10 @@ sub is_openvpn_running {
 
 sub bridge_control_elements{
 	my $br_ctl_elements = '';
-	$br_ctl_elements .= "<tr>".&ui_table_row($text{'devbr'},&ui_textbox('devbr',$in{'devbr'},4),'',[ 'width="50%"' ])."</tr>\n";
-	$br_ctl_elements .= "<tr>".&ui_table_row($text{'netdevbr'},&ui_select('netdevbr',$in{'netdevbr'},$a_eth ),'',[ 'width="50%"' ])."</tr>\n";
-	$br_ctl_elements .= "<tr>".&ui_table_row($text{'ifconfigbr'},$text{'ipbr'}.' :'.&ui_textbox('ipbr',$in{'ipbr'},15).'<br>'.$text{'netmaskbr'}.' :'.&ui_textbox('netmaskbr',$in{'netmaskbr'},15),'',[ 'width="50%"' ])."</tr>\n";
-	$br_ctl_elements .= "<tr>".&ui_table_row($text{'iprangebr'},$text{'iprangestartbr'}.':'.&ui_textbox('iprangestart',$in{'iprangestart'},15).' '.$text{'iprangeendbr'}.':'.&ui_textbox('iprangeend',$in{'iprangeend'},15),'',[ 'width="50%"' ])."</tr>\n";
+	$br_ctl_elements .= &ui_table_row($text{'devbr'},&ui_textbox('devbr',$in{'devbr'},4));
+	$br_ctl_elements .= &ui_table_row($text{'netdevbr'},&ui_select('netdevbr',$in{'netdevbr'},$a_eth ));
+	$br_ctl_elements .= &ui_table_row($text{'ifconfigbr'},$text{'ipbr'}.' :'.&ui_textbox('ipbr',$in{'ipbr'},15).'<br>'.$text{'netmaskbr'}.' :'.&ui_textbox('netmaskbr',$in{'netmaskbr'},15));
+	$br_ctl_elements .= &ui_table_row($text{'iprangebr'},$text{'iprangestartbr'}.':'.&ui_textbox('iprangestart',$in{'iprangestart'},15).' '.$text{'iprangeendbr'}.':'.&ui_textbox('iprangeend',$in{'iprangeend'},15));
 	return ($br_ctl_elements);
 }
 

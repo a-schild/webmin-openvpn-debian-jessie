@@ -1,3 +1,30 @@
+**    Version 3.3 (2021-01-26)
+
+    Changes
+	
+	01. Integrated patches from https://github.com/68b32/webmin-openvpn-debian-jessie and forks
+	02. Added option to export single-file .ovpn including certificates
+	03. Added option fo noauth-cache
+	
+**    Version 3.2 (2018-11-14)
+
+    Changes
+
+	01. Followed by Brad Gass on the possible values of the topology parameter in the VPN server (of type tun) and its modification.
+    	    Removed saving this option in case of tap server.
+        02. Updated WEB interface with the use of Webmin HTML visualization functions.
+
+    Bugs
+
+	01. Adaptation of the interface to a new restrictive policy on the use of HTML forms by Webmin.
+        02. Update of the modification of the VPN Client in view and in saving so that the automatic data of the server
+            are properly reported in the interface and saved accordingly (thanks to Brad Gass).
+        03. Modified the paths of the bridge scripts with the standard path of Webmin (signaling by Michele Mauro).
+        04. Following the indication of Michele Giorato, updated the ethernet reading through the ReadEths function for CentOS Linux 7.3.
+        05. Updated commands in action_vpn.cgi (eliminating sprintf) as indicated by Aslan.
+        06. As suggested by Francois Gendron, in the compiled fields of CA allowed the introduction of the 'without' character
+            for this to create problems.
+
 **    Version 3.1 (2017-07-04)
 
     Changes

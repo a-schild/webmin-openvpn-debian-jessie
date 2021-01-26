@@ -81,13 +81,12 @@ print "</table>";
 print "<BR>";
 
 print "<hr>\n";
-print "<form action=log_vpn.cgi>\n";
-print "<input type=hidden name=\"vpn\" value=\"".$in{'vpn'}."\">\n";
-print "<input type=hidden name=\"remove\" value=\"1\">\n";
-print "<table width=100%><tr>\n";
-print "<td><input type=submit value=\"$text{'empty_log'}\"></td>\n";
-print "<td>$text{'empty_logmsg'}</td>\n";
-print "</tr></table></form>\n";
+
+print &ui_buttons_start();
+
+print &ui_buttons_row("log_vpn.cgi",$text{'empty_log'},$text{'empty_logmsg'},&ui_hidden("vpn", $in{'vpn'}).&ui_hidden("remove", "1"));
+
+print &ui_buttons_end();
 
 print "<hr>\n";
 
@@ -97,13 +96,13 @@ print "<BR>";
 ##############################################################################33
 
 sub filter_form {
-    print "<form action=log_vpn.cgi style='margin-left:1em'>\n";
-    print "<input type=hidden name=vpn value='$in{'vpn'}'>\n";
+    print &ui_form_start("log_vpn.cgi", "POST");
+    print &ui_hidden('vpn',$in{'vpn'});
 
-    print &text('view_header', "<input name=lines size=3 value='$lines'>",
-	"<tt>".&html_escape($in{'vpn'})."</tt>"),"\n";
-    print "&nbsp;&nbsp;\n";
-    print &text('view_filter', "<input name=filter size=15 value='$in{'filter'}'>"),"\n";
-    print "&nbsp;&nbsp;\n";
-    print "<input type=submit value='$text{'view_refresh'}'></form>\n";
+    print &ui_table_start();
+    print &ui_table_row($text{'view_header'}, &ui_textbox('lines',$lines,3),&html_escape($in{'vpn'}))."</tr>\n";
+    print &ui_table_row($text{'view_filter'}, &ui_textbox('filter',$in{'filter'},15))."</tr>\n";
+    print &ui_table_end();
+    print &ui_form_end([ [ undef, $text{'view_refresh'} ] ]);
+
 }

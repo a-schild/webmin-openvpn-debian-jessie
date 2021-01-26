@@ -68,6 +68,7 @@ if (-d $in{'KEY_DIR'}.'/'.$in{'CA_NAME'}) { &error($text{'error_ca_name_2'}); }
 open CONFIG,">".$in{'KEY_DIR'}."/".$in{'CA_NAME'}."/ca.config";
 print CONFIG "\$info_ca = {\n";
 foreach $key (@fields) {
+    if ($in{$key} =~ /'/) { $in{$key} =~ s/'/\\'/g; }; #'
     print CONFIG $key."=>'".$in{$key}."',\n";
 }
 print CONFIG "}\n";

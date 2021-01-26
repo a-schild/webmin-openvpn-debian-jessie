@@ -56,17 +56,17 @@ print "<BR>";
 
 # form per nuova CA
 print &ui_form_start("create_ca.cgi", "POST");
-print &ui_table_start($text{'newca_title'});
-print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'city'}, &ui_textbox('KEY_CITY', 'New York',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'org'}, &ui_textbox('KEY_ORG', 'My Org',50),'',[ 'nowrap',1 ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'email'}, &ui_textbox('KEY_EMAIL', 'me@my.org',50),'',[ 'nowrap',1 ])."\n";
+print &ui_table_start($text{'newca_title'},'',2);
+print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'city'}, &ui_textbox('KEY_CITY', 'New York',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'org'}, &ui_textbox('KEY_ORG', 'My Org',50),'',[ 'nowrap',1 ]);
+print &ui_table_row($text{'email'}, &ui_textbox('KEY_EMAIL', 'me@my.org',50),'',[ 'nowrap',1 ]);
 print &ui_table_end();
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
 print "<BR>";

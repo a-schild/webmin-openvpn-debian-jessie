@@ -73,12 +73,9 @@ print "</table>\n";
 print "<BR>";
 print "<hr>\n";
 
-print "<table width=100%><tr>\n";
-print "<form action=new_client.cgi>\n";
-print "<input type=hidden name=vpn value=".$in{'vpn'}.">\n";
-print "<td><input type=submit value=\"$text{'new_client_title'}\"></td>\n";
-print "<td>".$text{'new_clientmsg'}." ".$in{'vpn'}."</td>\n";
-print "</tr></form></table>\n";
+print &ui_buttons_start();
+print &ui_buttons_row("new_client.cgi",$text{'new_client_title'},$text{'new_clientmsg'}." ".$in{'vpn'},&ui_hidden("vpn", $in{'vpn'}));
+print &ui_buttons_end();
 
 print "<hr>\n";
 print "<BR>";

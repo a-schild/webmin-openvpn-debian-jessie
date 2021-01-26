@@ -84,52 +84,71 @@ print &ui_hidden('CLIENT_NAME',$in{'CLIENT_NAME'});
 print &ui_hidden('dh','dh'.$$info_ca{'KEY_SIZE'}.'.pem');
 print &ui_hidden('tls-auth',$tlsauth_server);
 print &ui_hidden('modify',1);
-print &ui_table_start($text{'modifyclient_server_title'}.' '.$in{'CLIENT_NAME'},'width=100%');
-print &ui_table_row($text{'name'}, $in{'CLIENT_NAME'},'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'protocol'}, $in{'proto'})."</tr>\n";
-print "<tr>".&ui_table_row($text{'dev'}, $in{'dev'},'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'ca'}, $$info_ca{'CA_NAME'})."</tr>\n";
-print "<tr>".&ui_table_row($text{'choose_client'}, $text{'automatic_name'},'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'cert_client'}, $text{'automatic'},'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'key_client'}, $text{'automatic'},'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'dh'}, 'dh'.$$info_ca{'KEY_SIZE'}.'.pem')."</tr>\n";
-print "<tr>".&ui_table_row($text{'remote'}, $text{'remote_url'}.': '.&ui_textbox('remote_url',$in{'remote_url'},12).' '.$text{'remote_port'}.': '.$in{'remote_port'},'',[ 'width="50%"' ])."</tr>\n";
+print &ui_table_start($text{'modifyclient_server_title'}.' '.$in{'CLIENT_NAME'},'',2);
+print &ui_table_row($text{'name'}, $in{'CLIENT_NAME'});
+print &ui_table_row($text{'protocol'}, $in{'proto'},'width=100%');
+print &ui_table_row($text{'dev'}, $in{'dev'});
+print &ui_table_row($text{'ca'}, $$info_ca{'CA_NAME'},'width=100%');
+print &ui_table_row($text{'choose_client'}, $text{'automatic_name'});
+print &ui_table_row($text{'cert_client'}, $text{'automatic'});
+print &ui_table_row($text{'key_client'}, $text{'automatic'});
+print &ui_table_row($text{'dh'}, 'dh'.$$info_ca{'KEY_SIZE'}.'.pem','width=100%');
+print &ui_table_row($text{'remote'}, $text{'remote_url'}.': '.&ui_textbox('remote_url',$in{'remote_url'},12).' '.$text{'remote_port'}.': '.$in{'remote_port'});
+
 if ($tlsauth_server == $in{'tls-auth'}) {
     if ($in{'tls-auth'} == 1) {
-	print "<tr>".&ui_table_row($text{'tls-auth'}, $text{'yes'}." ".$text{'automatic_server'})."</tr>\n";
+	print &ui_table_row($text{'tls-auth'}, $text{'yes'}." ".$text{'automatic_server'});
     } else {
-	print "<tr>".&ui_table_row($text{'tls-auth'}, $text{'no'}." ".$text{'automatic_server'})."</tr>\n";
+	print &ui_table_row($text{'tls-auth'}, $text{'no'}." ".$text{'automatic_server'});
     }
 } else {
     if ($in{'tls-auth'} == 1) {
-	print "<tr bgcolor=red>".&ui_table_row($text{'tls-auth'}, "<b>".$text{'yes'}." -> ".$text{'no'}."</b> ".$text{'modified_server'})."</tr>\n";
+	print &ui_table_row($text{'tls-auth'}, "<span style=\"color:red\">".$text{'no'}." ".$text{'modified_server'}."</span>");
     } else {
-	print "<tr bgcolor=red>".&ui_table_row($text{'tls-auth'}, "<b>".$text{'no'}." -> ".$text{'yes'}."</b> ".$text{'modified_server'})."</tr>\n";
+	print &ui_table_row($text{'tls-auth'}, "<span style=\"color:red\">".$text{'yes'}." ".$text{'modified_server'}."</span>");
     }
 }
-print "<tr>".&ui_table_row($text{'cipher'}, $in{'cipher'})."</tr>\n";
-print "<tr>".&ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', $in{'comp-lzo'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'user'}, &ui_select('user', $in{'user'}, $a_user),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'group'}, &ui_select('group', $in{'group'}, $a_group),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'persist-key'}, &ui_select('persist-key', $in{'persist-key'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'persist-tun'}, &ui_select('persist-tun', $in{'persist-tun'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'keepalive'}, $text{'keepalive_ping'}.': '.&ui_textbox('keepalive_ping',$in{'keepalive_ping'},3)." ".$text{'keepalive_ping-restart'}.': '.&ui_textbox('keepalive_ping-restart',$in{'keepalive_ping-restart'},3),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'verb'}, &ui_select('verb', $in{'verb'}, $a_verb),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'mute'}, &ui_select('mute', $in{'mute'}, $a_mute),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'tun-mtu'}, $in{'tun-mtu'}." ".$text{'automatic_server'})."</tr>\n";
-print "<tr>".&ui_table_row($text{'fragment'}, &ui_textbox('fragment',$in{'fragment'},4),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'mssfix'}, $in{'mssfix'}." ".$text{'automatic_server'})."</tr>\n";
-print "<tr>".&ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
+
+if ($server_info{'cipher'} eq $in{'cipher'}) {
+    print &ui_table_row($text{'cipher'}, $in{'cipher'}." ".$text{'automatic_server'});
+} else {
+    print &ui_table_row($text{'cipher'}, "<span style=\"color:red\">".$server_info{'cipher'}." ".$text{'modified_server'}."</span>");
+}
+
+print &ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', $in{'comp-lzo'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
+print &ui_table_row($text{'user'}, &ui_select('user', $in{'user'}, $a_user));
+print &ui_table_row($text{'group'}, &ui_select('group', $in{'group'}, $a_group));
+print &ui_table_row($text{'persist-key'}, &ui_select('persist-key', $in{'persist-key'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
+print &ui_table_row($text{'persist-tun'}, &ui_select('persist-tun', $in{'persist-tun'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
+print &ui_table_row($text{'keepalive'}, $text{'keepalive_ping'}.': '.&ui_textbox('keepalive_ping',$in{'keepalive_ping'},3)." ".$text{'keepalive_ping-restart'}.': '.&ui_textbox('keepalive_ping-restart',$in{'keepalive_ping-restart'},3));
+print &ui_table_row($text{'verb'}, &ui_select('verb', $in{'verb'}, $a_verb));
+print &ui_table_row($text{'mute'}, &ui_select('mute', $in{'mute'}, $a_mute));
+
+if ($server_info{'tun-mtu'} == $in{'tun-mtu'}) {
+    print &ui_table_row($text{'tun-mtu'}, $in{'tun-mtu'}." ".$text{'automatic_server'});
+} else {
+    print &ui_table_row($text{'tun-mtu'}, "<span style=\"color:red\">".$server_info{'tun-mtu'}." ".$text{'modified_server'}."</span>");
+}
+
+print &ui_table_row($text{'fragment'}, &ui_textbox('fragment',$in{'fragment'},4));
+
+if ($server_info{'mssfix'} == $in{'mssfix'}) {
+    print &ui_table_row($text{'mssfix'}, $in{'mssfix'}." ".$text{'automatic_server'});
+} else {
+    print &ui_table_row($text{'mssfix'}, "<span style=\"color:red\">".$server_info{'mssfix'}." ".$text{'modified_server'}."</span>");
+}
+
+print &ui_table_row($text{'float'}, &ui_select('float', $in{'float'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]));
+print &ui_table_row($text{'adds_conf'}, &ui_textarea('adds_conf', $in{'adds_conf'}, 5, 45, 'off'));
 print &ui_table_end();
-print &ui_table_start($text{'commands'},'width=100%');
-print "<tr>".&ui_table_row($text{'up-pre'}, &ui_textarea('up-pre', $in{'up-pre'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'up'}, &ui_textarea('up', $in{'up'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', $in{'down-pre'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'down'}, &ui_textarea('down', $in{'down'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
+print &ui_table_start($text{'commands'},'',2);
+print &ui_table_row($text{'up-pre'}, &ui_textarea('up-pre', $in{'up-pre'}, 3, 45, 'off'));
+print &ui_table_row($text{'up'}, &ui_textarea('up', $in{'up'}, 3, 45, 'off'));
+print &ui_table_row($text{'down-pre'}, &ui_textarea('down-pre', $in{'down-pre'}, 3, 45, 'off'));
+print &ui_table_row($text{'down'}, &ui_textarea('down', $in{'down'}, 3, 45, 'off'));
 print &ui_table_end();
-print &ui_table_start($text{'ccdfile'},'width=100%');
-print "<tr>".&ui_table_row($text{'ccdfile-content'}, &ui_textarea('ccdfile', $in{'ccdfile'}, 3, 45, 'off'),'',[ 'width="50%"' ])."</tr>\n";
+print &ui_table_start($text{'ccdfile'},'',2);
+print &ui_table_row($text{'ccdfile-content'}, &ui_textarea('ccdfile', $in{'ccdfile'}, 3, 45, 'off'));
 print &ui_table_end();
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
 

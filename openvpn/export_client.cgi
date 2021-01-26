@@ -24,6 +24,7 @@ if ($in{'client'}) {
     &ReadFieldsCA($in{'ca'});
 
     File::Copy::copy($config{'openvpn_home'}.'/'.$in{'ca_dir'}.'/ca.crt',$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'vpn'}.'/'.$in{'client'}.'/'); 
+    File::Copy::copy($config{'openvpn_home'}.'/'.$in{'ca_dir'}.'/dh'.$$info_ca{'KEY_SIZE'}.'.pem',$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'vpn'}.'/'.$in{'client'}.'/');
 
     File::Copy::copy($config{'openvpn_home'}.'/'.$in{'ca_dir'}.'/'.$in{'client'}.'.crt',$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'vpn'}.'/'.$in{'client'}.'/'.$in{'client'}.'.crt');
     File::Copy::copy($config{'openvpn_home'}.'/'.$in{'ca_dir'}.'/'.$in{'client'}.'.key',$config{'openvpn_home'}.'/'.$config{'openvpn_clients_subdir'}.'/'.$in{'vpn'}.'/'.$in{'client'}.'/'.$in{'client'}.'.key');

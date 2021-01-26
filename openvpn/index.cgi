@@ -86,62 +86,23 @@ $ds_icon = { "icon" => "images/listactiveconnect.gif",
 	     "link" => "listactiveconnect.cgi?all=1" };
 &config_icons("global", $df_icon, $ht_icon, $ds_icon);
 
-#print "<hr>\n";
-
-# form per nuova CA
-#print &ui_form_start("create_ca.cgi", "POST");
-#print &ui_table_start($text{'newca_title'});
-#print &ui_table_row($text{'ca_ca_name'}, &ui_textbox('CA_NAME','changeme',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'ca_key_config'}, &ui_textbox('KEY_CONFIG',$config{'openssl_home'},50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'ca_key_dir'}, $config{'openvpn_home'}.'/'.$config{'openvpn_keys_subdir'},'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'ca_key_size'}, &ui_select('KEY_SIZE', 2048, [ [2048,2048], [4096,4096] ]),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'ca_ca_expire'}, &ui_textbox('CA_EXPIRE', '3650',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'country'}, &ui_textbox('KEY_COUNTRY', 'US',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'province'}, &ui_textbox('KEY_PROVINCE', 'NY',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'city'}, &ui_textbox('KEY_CITY', 'New York',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'org'}, &ui_textbox('KEY_ORG', 'My Org',50),'',[ 'nowrap',1 ])."</tr>\n";
-#print "<tr>".&ui_table_row($text{'email'}, &ui_textbox('KEY_EMAIL', 'me@my.org',50),'',[ 'nowrap',1 ])."\n";
-#print &ui_table_end();
-#print &ui_form_end([ [ "save", $text{'save'} ] ]);
-
 $isrun = &is_openvpn_running();
 print "<hr>\n";
-print "<table width=100%>\n";
 if ($isrun == 0) {
-    print "<tr valign=\"middle\"><form action=actions.cgi><td>\n";
-    print "<input type=hidden name=action value=start>\n";
-    print "<input type=submit value=\"$text{'index_start'}\"></td>\n";
-    print "<td>$text{'index_startmsg'}</td>\n";
-    print "</form></tr>\n";
+    print &ui_buttons_start();
+
+    print &ui_buttons_row("actions.cgi",$text{'index_start'},$text{'index_startmsg'},&ui_hidden("action", "start"));
+
+    print &ui_buttons_end();
 } elsif ($isrun) {
-    print "<tr valign=\"middle\"><form action=actions.cgi><td>\n";
-    print "<input type=hidden name=action value=restart>\n";
-    print "<input type=submit value=\"$text{'index_restart'}\"></td>\n";
-    print "<td>$text{'index_restartmsg'}</td>\n";
-    print "</form></tr>\n";
+    print &ui_buttons_start();
 
-    print "<tr valign=\"middle\"><form action=actions.cgi><td>\n";
-    print "<input type=hidden name=action value=stop>\n";
-    print "<input type=submit value=\"$text{'index_stop'}\"></td>\n";
-    print "<td>$text{'index_stopmsg'}</td>\n";
-    print "</form></tr>\n";
+    print &ui_buttons_row("actions.cgi",$text{'index_restart'},$text{'index_restartmsg'},&ui_hidden("action", "restart"));
+    print &ui_buttons_row("actions.cgi",$text{'index_stop'},$text{'index_stopmsg'},&ui_hidden("action", "stop"));
+
+    print &ui_buttons_end();
+
 }
-
-# This check should be implemented adding the wget url into config file.
-# Due to time problems we hope to implement it in the next version.
-# At this time checking via third party modules is enough.
-# For Hans: if you want to readd this feature please insert the wget url 
-# into config file.   
-#print "<tr valign=\"middle\"><form action=actions.cgi><td>\n";
-#print "<input type=hidden name=action value=check>\n";
-#print "<input type=submit value=\"$text{'index_check'}\"></td>\n";
-#print "<td>";
-#if (( $version != $availver ) && ( $availver != "" )){
-#    print "$text{'index_updatemsg'} (".$availver.")\n";
-#} else {
-#    print "$text{'index_checkmsg'}\n";
-#}
-#print "</td>\n";
-#print "</form></tr>\n";
-print "</table>\n";
 print "<hr>\n";
+
+&ui_print_footer("/", $text{'index'});

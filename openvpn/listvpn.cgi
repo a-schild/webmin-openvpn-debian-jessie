@@ -104,20 +104,13 @@ print "<BR>";
 print "<hr>\n";
 
 if (@$listca) {
-    print "<table width=100%><tr>\n";
-    print "<form action=new_vpn.cgi>\n";
-    print "<td nowrap>";
-	print "<b>".$text{'ca'}.':</b> '.&ui_select('ca', '', $listca);
-    print "</td>\n";
-    print "<td rowspan=2>".$text{'newvpn_server_titlemsg'}."</td></tr>\n";
-    print "<tr><td><input type=submit value=\"$text{'newvpn_server_title'}\"></td>\n";
-    print "</tr></form></table>\n";
+    print &ui_form_start("new_vpn.cgi");
+    print "<b>".$text{'ca'}.':</b> '.&ui_select('ca', '', $listca).$text{'newvpn_server_titlemsg'};
+    print &ui_form_end([ [ undef, $text{'newvpn_server_title'} ] ]);
 } else {
-    print "<table width=100%><tr>\n";
-    print "<form action=/openvpn/>\n";
-    print "<td><input type=submit value=\"$text{'newca_title'}\"></td>\n";
-    print "<td>".$text{'newvpn_server_title_nocamsg'}."</td></tr>\n";
-    print "</tr></form></table>\n";
+    print &ui_buttons_start();
+    print &ui_buttons_row("/openvpn/",$text{'newca_title'},$text{'newvpn_server_title_nocamsg'});
+    print &ui_buttons_end();
 }
 
 print "<hr>\n";
@@ -200,11 +193,15 @@ print "</table>\n";
 print "<BR>";
 print "<hr>\n";
 
-print "<table width=100%><tr>\n";
-print "<form action=new_static_vpn.cgi>\n";
-print "<td><input type=submit value=\"$text{'newvpn_static_server_title'}\"></td>\n";
-print "<td>".$text{'newvpn_static_servermsg'}." ".$in{'vpn'}."</td>\n";
-print "</tr></form></table>\n";
+print &ui_buttons_start();
+print &ui_buttons_row("new_static_vpn.cgi",$text{'newvpn_static_server_title'},$text{'newvpn_static_servermsg'}." ".$in{'vpn'});
+print &ui_buttons_end();
+
+#print "<table width=100%><tr>\n";
+#print "<form action=new_static_vpn.cgi>\n";
+#print "<td><input type=submit value=\"$text{'newvpn_static_server_title'}\"></td>\n";
+#print "<td>".$text{'newvpn_static_servermsg'}." ".$in{'vpn'}."</td>\n";
+#print "</tr></form></table>\n";
 
 print "<hr>\n";
 print "<BR>";
