@@ -1,3 +1,11 @@
+2021-01-26 16:19 a-schild
+
+        Added option to export client config to a single .ovpn including the certificates
+        Added auth-nocache option
+        Modified cipher detection to work with v1.0.x openssl
+        Merged old patches
+        Version changed to 3.2
+        
 2017-07-04 11:35:43 marco (r19)
 
         Ultimi doc per rilascio versione 3.1
