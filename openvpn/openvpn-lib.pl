@@ -644,7 +644,7 @@ sub ReadVPNConf {
 	$namefile = $config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled';
     }
     open F, $namefile;
-    $key_normal = ",port,proto,dev,cipher,max-clients,user,group,verb,mute,fragment,tun-mtu,mssfix,chroot,local,topology,";
+    $key_normal = ",port,proto,dev,cipher,max-clients,user,group,verb,mute,fragment,tun-mtu,mssfix,chroot,local,topology,log-append,status,";
     $key_skip= ",ca,cert,dh,status,log-append,crl-verify,client-config-dir,";
     $key_commands= ",up,down,up-pre,down-pre,";
     $down_root_plugin= $config{'down_root_plugin'}.' ';
@@ -692,7 +692,7 @@ sub ReadVPNConf {
 		$value =~ /^(.+)\s+(.+)$/;
 		$in{'keepalive_ping'} = $1;
 		$in{'keepalive_ping-restart'} = $2;
-            } elsif (($key eq "plugin") && $value =~ /^$config{'down_root_plugin'}/) {
+            } elsif (($key eq "plugin") && $value =~ /^$config{'down_root_plugin'}/ && $config{'down_root_plugin'}) {
                 $key = 'down-root';
                 $value =~ s/^$config{'down_root_plugin'}\s+//;  # estrae il nome dello script
                 $value =~ s/"//g; #" 				# elimina le virgolette!!!
@@ -751,8 +751,7 @@ sub ReadStaticVPNConf {
 	$namefile = $config{'openvpn_home'}.'/'.$in{'vpn'}.'.disabled';
     }
     open F, $namefile;
-    $key_normal = ",port,proto,dev,user,group,verb,mute,topology,";
-    $key_skip= ",status,log-append,";
+    $key_normal = ",port,proto,dev,user,group,verb,mute,topology,log-append,status,";
     #$key_skip= ",status,log-append,secret,";
     $key_commands= ",up,down,";
     $key_key= ",comp-lzo,persist-key,persist-tun,";

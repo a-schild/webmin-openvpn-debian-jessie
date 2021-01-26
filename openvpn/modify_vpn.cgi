@@ -137,8 +137,8 @@ print "<tr>".&ui_table_row($text{'persist-tun'}, &ui_select('persist-tun', $in{'
 print "<tr>".&ui_table_row($text{'keepalive'}, $text{'keepalive_ping'}.': '.&ui_textbox('keepalive_ping',$in{'keepalive_ping'},3)." ".$text{'keepalive_ping-restart'}.': '.&ui_textbox('keepalive_ping-restart',$in{'keepalive_ping-restart'},3),'',[ 'width="50%"' ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'verb'}, &ui_select('verb', $in{'verb'}, $a_verb),'',[ 'width="50%"' ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'mute'}, &ui_select('mute', $in{'mute'}, $a_mute),'',[ 'width="50%"' ])."</tr>\n";
-print "<tr>".&ui_table_row($text{'status'}, 'openvpn-status.log')."</tr>\n";
-print "<tr>".&ui_table_row($text{'log-append'}, 'openvpn.log')."</tr>\n";
+print "<tr>".&ui_table_row($text{'status'}, &ui_textbox('status',$in{'status'},40),'',[ 'width="50%"' ])."</tr>\n";
+print "<tr>".&ui_table_row($text{'log-append'}, &ui_textbox('log-append',$in{'log-append'},40),'',[ 'width="50%"' ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'tun-mtu'}, &ui_textbox('tun-mtu',$in{'tun-mtu'},4),'',[ 'width="50%"' ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'fragment'}, &ui_textbox('fragment',$in{'fragment'},4),'',[ 'width="50%"' ])."</tr>\n";
 print "<tr>".&ui_table_row($text{'mssfix'}, &ui_textbox('mssfix',$in{'mssfix'},4),'',[ 'width="50%"' ])."</tr>\n";

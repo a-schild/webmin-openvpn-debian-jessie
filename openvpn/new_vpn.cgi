@@ -81,7 +81,6 @@ if (@$a_server) {
     print &ui_hidden('ca_dir',$config{'openvpn_keys_subdir'}.'/'.$in{'ca'});
     print &ui_hidden('ca',$config{'openvpn_keys_subdir'}.'/'.$in{'ca'}.'/ca.crt');
     print &ui_hidden('ca_name',$in{'ca'});
-    print &ui_hidden('ccd-exclusive',1);
     print &ui_hidden('management_url','127.0.0.1');
     print &ui_hidden('dh',$config{'openvpn_keys_subdir'}.'/'.$in{'ca'}.'/dh'.$$info_ca{'KEY_SIZE'}.'.pem');
     print &ui_hidden('crl-verify',$config{'openvpn_keys_subdir'}.'/'.$in{'ca'}.'/crl.pem');
@@ -108,7 +107,7 @@ if (@$a_server) {
     print "<tr>".&ui_table_row($text{'client-to-client'}, &ui_select('client-to-client', '0', [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'duplicate-cn'}, &ui_select('duplicate-cn', '0', [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'tls-auth'}, &ui_select('tls-auth', '0', [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
-    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, $text{'yes'},'',[ 'width="50%"' ])."</tr>\n";
+    print "<tr>".&ui_table_row($text{'ccd-exclusive'}, &ui_select('ccd-exclusive', $in{'ccd-exclusive'}, [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'cipher'}, &ui_select('cipher', '0', $a_cypher),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'comp-lzo'}, &ui_select('comp-lzo', '1', [ ['0',$text{'no'}],['1',$text{'yes'} ] ]),'',[ 'width="50%"' ])."</tr>\n";
     print "<tr>".&ui_table_row($text{'max-clients'}, &ui_textbox('max-clients','100',4),'',[ 'width="50%"' ])."</tr>\n";
